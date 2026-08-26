@@ -783,6 +783,17 @@
         <hr class="divider">
         <button class="btn btn-ghost" style="color:var(--red);border-color:var(--red);" onclick="confirmReset()">🗑 Reset All Data</button>
       </div>
+
+      <div class="card">
+        <div class="flex-between" style="margin-bottom:12px;">
+          <div class="card-title" style="margin-bottom:0;">Starting Balances</div>
+          <button id="settingsLockBtn" class="btn btn-sm tally-lock-active" onclick="toggleSettingsLock()" title="Unlock"><i class="ti ti-lock"></i></button>
+        </div>
+        <div class="field"><label>Starting Cash on Hand (₱)</label><input type="number" id="settingOpenCOH" value="20000" inputmode="decimal" disabled></div>
+        <div class="field"><label>Starting GCash Balance (₱)</label><input type="number" id="settingOpenCOG" value="20000" inputmode="decimal" disabled></div>
+        <div class="field"><label>Capital (₱)</label><input type="number" id="settingCapital" value="40000" inputmode="decimal" disabled></div>
+        <button id="settingsSaveBtn" class="btn btn-primary" onclick="saveSettings()" style="display:none;">Save Settings</button>
+      </div>
       
       <div class="card">
         <div class="card-title">Appearance</div>
@@ -836,17 +847,6 @@
             <div class="theme-name">Violet</div>
           </button>
         </div>
-      </div>
-
-      <div class="card">
-        <div class="flex-between" style="margin-bottom:12px;">
-          <div class="card-title" style="margin-bottom:0;">Starting Balances</div>
-          <button id="settingsLockBtn" class="btn btn-sm tally-lock-active" onclick="toggleSettingsLock()" title="Unlock"><i class="ti ti-lock"></i></button>
-        </div>
-        <div class="field"><label>Starting Cash on Hand (₱)</label><input type="number" id="settingOpenCOH" value="20000" inputmode="decimal" disabled></div>
-        <div class="field"><label>Starting GCash Balance (₱)</label><input type="number" id="settingOpenCOG" value="20000" inputmode="decimal" disabled></div>
-        <div class="field"><label>Capital (₱)</label><input type="number" id="settingCapital" value="40000" inputmode="decimal" disabled></div>
-        <button id="settingsSaveBtn" class="btn btn-primary" onclick="saveSettings()" style="display:none;">Save Settings</button>
       </div>
 
       <div class="card" style="text-align:center;">
