@@ -174,8 +174,8 @@
   .deficit-pct { font-size: clamp(9px,2.5vw,11px); color: var(--teal); font-weight: 700; margin-top: 4px; }
 
   /* ── BOTTOM NAV ── */
-  #tabs { display: flex; background: var(--glass-tabs); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid var(--border); flex-shrink: 0; position: sticky; bottom: 0; z-index: 50; padding-bottom: env(safe-area-inset-bottom, 0px); box-shadow: var(--shadow-tabs); }
-  .tab { flex: 1; padding: 14px 4px 12px; text-align: center; font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); cursor: pointer; border-top: 2.5px solid transparent; transition: color .2s, border-color .2s, background .2s; user-select: none; position: relative; min-height: 64px; }
+  #tabs { display: flex; background: var(--glass-tabs); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid var(--border); flex-shrink: 0; position: sticky; bottom: 0; z-index: 50; padding-bottom: env(safe-area-inset-bottom, 0px); padding-left: max(8px, env(safe-area-inset-left, 8px)); padding-right: max(8px, env(safe-area-inset-right, 8px)); box-shadow: var(--shadow-tabs); }
+  .tab { flex: 1; padding: 14px 6px 12px; text-align: center; font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); cursor: pointer; border: none; border-top: 2.5px solid transparent; background: transparent; transition: color .2s, border-color .2s, background .2s; user-select: none; position: relative; min-height: 64px; }
   .tab.active { color: var(--teal); border-top-color: var(--teal); background: rgba(52,211,153,.05); }
   .tab-icon { font-size: 26px; display: block; margin-bottom: 3px; }
 
