@@ -142,7 +142,7 @@
   .pod.coh .pod-label { color: #A5AACF; }
   .pod.cog .pod-label { color: #6EE7B7; }
   .pod-amount {
-    font-family: var(--mono); font-size: 28px; font-weight: 700; letter-spacing: -.5px; line-height: 1; position: relative;
+    font-family: var(--mono); font-size: clamp(16px,5vw,24px); font-weight: 700; letter-spacing: -.5px; line-height: 1; position: relative;
     background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   }
   .pod.coh .pod-amount { background-image: linear-gradient(135deg, #FBBF24 0%, #FCD34D 60%, #F59E0B 100%); }
@@ -585,7 +585,7 @@
       </div>
       <div class="mini-bal">
         <span class="mini-bal-lbl">Earned</span>
-        <span class="mini-bal-amt" style="color:var(--teal);" id="miniEarned">₱0</span>
+        <span class="mini-bal-amt" style="color:var(--purple);" id="miniEarned">₱0</span>
       </div>
     </div>
 
