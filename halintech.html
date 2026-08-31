@@ -163,15 +163,27 @@
   .pod.coh.pulse { animation: pod-pulse-coh .6s ease-out; }
 
   /* ── DEFICIT BAR ── */
-  .deficit { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 10px; }
-  .deficit-item { border-radius: 18px; padding: 14px 16px; border: 1px solid var(--border); background: var(--surface2); display: flex; flex-direction: column; }
+  .deficit { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+  .deficit-item {
+    border-radius: 18px; padding: 14px 16px; display: flex; flex-direction: column;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  }
+  .earned-row { display: flex; align-items: baseline; gap: 6px; margin-top: 4px; }
+  .earned-sep { color: var(--muted); font-size: 14px; font-weight: 400; }
   .deficit-sep { display: none; }
   .deficit-label { font-size: 9px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
   .deficit-val { font-family: var(--mono); font-size: clamp(16px,5vw,24px); font-weight: 700; letter-spacing: -.5px; line-height: 1; color: var(--text); }
-  .deficit-val.ok   { color: var(--teal); }
-  .deficit-val.warn { color: var(--amber); }
-  .deficit-val.bad  { color: var(--red); }
-  .deficit-pct { font-size: clamp(9px,2.5vw,11px); color: var(--teal); font-weight: 700; margin-top: 4px; }
+  .deficit-val.ok     { color: var(--teal); }
+  .deficit-val.warn   { color: var(--amber); }
+  .deficit-val.bad    { color: var(--red); }
+  .deficit-val.earned { color: var(--purple); }
+  .deficit-pct { font-size: clamp(9px,2.5vw,11px); color: var(--purple); font-weight: 700; margin-top: 4px; }
+  .deficit-badge { display: inline-flex; align-items: center; gap: 5px; background: rgba(248,113,113,0.12); border: 1px solid rgba(248,113,113,0.35); border-radius: 20px; padding: 3px 10px; margin-top: 6px; align-self: flex-start; }
+  .deficit-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--red); flex-shrink: 0; }
+  .deficit-badge-text { font-size: 11px; font-weight: 700; color: var(--red); font-family: var(--mono); }
 
   /* ── BOTTOM NAV ── */
   #tabs { display: flex; background: var(--glass-tabs); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid var(--border); flex-shrink: 0; position: sticky; bottom: 0; z-index: 50; padding-bottom: env(safe-area-inset-bottom, 0px); padding-left: max(8px, env(safe-area-inset-left, 8px)); padding-right: max(8px, env(safe-area-inset-right, 8px)); box-shadow: var(--shadow-tabs); }
@@ -582,28 +594,29 @@
         <div class="pod coh" id="podCOH">
           <div class="pod-label">Cash on Hand</div>
           <div class="pod-amount" id="dispCOH">₱0</div>
-          <!-- <div class="pod-sub" id="dispCOHsub">Opening: ₱0</div> -->
         </div>
         <div class="pod cog" id="podCOG">
           <div class="pod-label">GCash Balance</div>
           <div class="pod-amount" id="dispCOG">₱0</div>
-          <!-- <div class="pod-sub" id="dispCOGsub">Opening: ₱0</div> -->
         </div>
       </div>
 
       <div class="deficit">
         <div class="deficit-item">
           <div class="deficit-label">Total Earned</div>
-          <div class="deficit-val ok" id="dispEarned">₱0</div>
-          <div class="deficit-pct" id="dispEarnedPct">0%</div>
+          <div class="earned-row">
+            <div class="deficit-val earned" id="dispEarned">₱0</div>
+            <span class="earned-sep">·</span>
+            <div class="deficit-pct" id="dispEarnedPct">0%</div>
+          </div>
         </div>
         <div class="deficit-item">
           <div class="deficit-label">Total</div>
           <div class="deficit-val" id="dispTotal">₱0</div>
-        </div>
-        <div class="deficit-item">
-          <div class="deficit-label">Deficit</div>
-          <div class="deficit-val" id="dispDeficit">₱0</div>
+          <div id="deficitBadge" style="display:none" class="deficit-badge">
+            <div class="deficit-badge-dot"></div>
+            <div class="deficit-badge-text" id="dispDeficit"></div>
+          </div>
         </div>
       </div>
       <div class="mismatch-banner" id="mismatchBanner"></div>
@@ -1229,10 +1242,15 @@ function render() {
   const earnPct = cap > 0 ? (bal.totalEarned / cap * 100).toFixed(2) + '%' : '0%';
   const _el_dispEarned = document.getElementById('dispEarned'); if(_el_dispEarned) _el_dispEarned.textContent = fmt(bal.totalEarned);
   const _el_dispEarnedPct = document.getElementById('dispEarnedPct'); if(_el_dispEarnedPct) _el_dispEarnedPct.textContent = earnPct;
+  const deficitBadge = document.getElementById('deficitBadge');
   const dEl = document.getElementById('dispDeficit');
-  if (dEl) {
-    dEl.textContent = fmt(deficit);
-    dEl.className = 'deficit-val ' + (deficit === 0 ? 'ok' : deficit > 0 ? 'green' : 'bad');
+  if (deficitBadge && dEl) {
+    if (deficit === 0) {
+      deficitBadge.style.display = 'none';
+    } else {
+      deficitBadge.style.display = 'inline-flex';
+      dEl.textContent = 'Deficit ' + fmt(deficit);
+    }
   }
 
   updateMiniBalance(bal);
