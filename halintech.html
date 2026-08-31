@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="HalinIQ">
 <meta name="mobile-web-app-capable" content="yes">
-<title>HalinIQ v14</title>
+<title>HalinIQ v15</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230F172A'/><ellipse cx='24' cy='32' rx='13' ry='13' fill='none' stroke='%23818CF8' stroke-width='4'/><ellipse cx='40' cy='32' rx='13' ry='13' fill='none' stroke='%2334D399' stroke-width='4'/><text x='32' y='37' font-size='16' font-weight='700' fill='%23FBBF24' font-family='system-ui' text-anchor='middle'>&#8369;</text><rect x='40' y='49' width='20' height='11' rx='4' fill='%2334D399'/><text x='50' y='58' font-size='7' font-weight='700' fill='%23022C22' font-family='system-ui' text-anchor='middle'>IQ</text></svg>">
 <!-- apple-touch-icon and manifest hrefs are populated at runtime by setupPWAIcons() (iOS requires a PNG, not SVG) -->
 <link rel="apple-touch-icon" id="appleTouchIcon">
@@ -1065,19 +1065,114 @@ let state = {
   searchQuery: ''
 };
 
-// ── STORAGE ────────────────────────────────────────────────────────────────
-function saveState() {
-  try { localStorage.setItem('gcash_tracker_v2', JSON.stringify(state)); } catch(e) {
-    if (e && e.name === 'QuotaExceededError') {
-      showToast('Storage full! Please export your data to free up space.');
-    }
-  }
+// ── INDEXEDDB STORAGE ──────────────────────────────────────────────────────
+const DB_NAME    = 'haliniq_db';
+const DB_VERSION = 1;
+let _db = null;
+
+function openDB() {
+  return new Promise((resolve, reject) => {
+    if (_db) { resolve(_db); return; }
+    const req = indexedDB.open(DB_NAME, DB_VERSION);
+    req.onupgradeneeded = e => {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains('transactions')) {
+        const s = db.createObjectStore('transactions', { keyPath: 'id' });
+        s.createIndex('by_ts',   'ts',   { unique: false });
+        s.createIndex('by_type', 'type', { unique: false });
+      }
+      if (!db.objectStoreNames.contains('settings')) db.createObjectStore('settings', { keyPath: 'id' });
+      if (!db.objectStoreNames.contains('tally'))    db.createObjectStore('tally',    { keyPath: 'id' });
+    };
+    req.onsuccess = e => { _db = e.target.result; resolve(_db); };
+    req.onerror   = e => reject(e.target.error);
+  });
 }
-function loadState() {
+
+function idbPut(store, record) {
+  return openDB().then(db => new Promise((resolve, reject) => {
+    const tx = db.transaction(store, 'readwrite');
+    tx.objectStore(store).put(record).onsuccess = () => resolve();
+    tx.onerror = e => reject(e.target.error);
+  }));
+}
+
+function idbGetAll(store, index) {
+  return openDB().then(db => new Promise((resolve, reject) => {
+    const s   = db.transaction(store, 'readonly').objectStore(store);
+    const req = index ? s.index(index).getAll() : s.getAll();
+    req.onsuccess = e => resolve(e.target.result);
+    req.onerror   = e => reject(e.target.error);
+  }));
+}
+
+function idbGet(store, key) {
+  return openDB().then(db => new Promise((resolve, reject) => {
+    const req = db.transaction(store, 'readonly').objectStore(store).get(key);
+    req.onsuccess = e => resolve(e.target.result);
+    req.onerror   = e => reject(e.target.error);
+  }));
+}
+
+function idbClear(store) {
+  return openDB().then(db => new Promise((resolve, reject) => {
+    const tx = db.transaction(store, 'readwrite');
+    tx.objectStore(store).clear().onsuccess = () => resolve();
+    tx.onerror = e => reject(e.target.error);
+  }));
+}
+
+// Rewrites every transaction in one atomic IDB transaction.
+// Called after any mutation (add/edit/delete/import/restore/recalc).
+function saveAllTxns() {
+  return openDB().then(db => new Promise((resolve, reject) => {
+    const tx    = db.transaction('transactions', 'readwrite');
+    const store = tx.objectStore('transactions');
+    store.clear();
+    state.transactions.forEach(t => store.put(t));
+    tx.oncomplete = () => resolve();
+    tx.onerror    = e => reject(e.target.error);
+  })).catch(e => console.warn('[HalinIQ] saveAllTxns failed', e));
+}
+
+function saveSettingsToIDB() {
+  return idbPut('settings', { id: 'main', ...state.settings })
+    .catch(e => console.warn('[HalinIQ] saveSettings failed', e));
+}
+
+// One-time migration: moves existing localStorage data into IDB on first run.
+async function migrateFromLocalStorage() {
   try {
     const raw = localStorage.getItem('gcash_tracker_v2');
-    if (raw) { const s = JSON.parse(raw); Object.assign(state, s); }
-  } catch(e) {}
+    if (!raw) return;
+    const old = JSON.parse(raw);
+    if (!Array.isArray(old.transactions)) return;
+    state.transactions = old.transactions;
+    if (old.settings) Object.assign(state.settings, old.settings);
+    await saveAllTxns();
+    await saveSettingsToIDB();
+    const rawTally = localStorage.getItem('gcash_tally_v1');
+    if (rawTally) { Object.assign(tallyState, JSON.parse(rawTally)); saveTallyState(); }
+    localStorage.removeItem('gcash_tracker_v2');
+    localStorage.removeItem('gcash_tally_v1');
+    console.log('[HalinIQ] Migrated', state.transactions.length, 'transactions to IndexedDB');
+  } catch(e) { console.warn('[HalinIQ] Migration skipped — localStorage preserved', e); }
+}
+
+// Loads all persisted data at boot. Falls back to migration on first run.
+async function loadAll() {
+  const [txns, settings, tally] = await Promise.all([
+    idbGetAll('transactions', 'by_ts'),
+    idbGet('settings', 'main'),
+    idbGet('tally',    'main'),
+  ]);
+  if (txns && txns.length) {
+    state.transactions = txns;
+    if (settings) { const { id: _id, ...rest } = settings; Object.assign(state.settings, rest); }
+    if (tally)    { const { id: _id, ...rest } = tally;    Object.assign(tallyState, rest); }
+  } else {
+    await migrateFromLocalStorage();
+  }
 }
 
 // ── CALCULATIONS ───────────────────────────────────────────────────────────
@@ -1823,7 +1918,7 @@ function submitModalTxn() {
     state.transactions.push(t);
   }
 
-  saveState();
+  saveAllTxns();
   closeModal('addModal');
   document.getElementById('mAmount').value = '';
   document.getElementById('mEarn').value = '';
@@ -1881,7 +1976,7 @@ function saveSettings() {
   state.settings.openCOH = newCOH;
   state.settings.openCOG = newCOG;
   state.settings.capital = newCap;
-  saveState(); render(); showToast('Settings saved ✓');
+  saveSettingsToIDB(); render(); showToast('Settings saved ✓');
 }
 
 // ── THEME ──────────────────────────────────────────────────────────────────
@@ -1945,7 +2040,8 @@ function confirmReset() {
     tallyState.denoms.uncollected = 0;
     tallyState.gcash = [{ name:'Wifey', amount:0 }, { name:'Me', amount:0 }];
     saveTallyState();
-    saveState(); render(); showToast('Data reset');
+    Promise.all([idbClear('transactions'), saveSettingsToIDB()]).catch(e => console.warn('[HalinIQ] Reset IDB clear failed', e));
+    render(); showToast('Data reset');
   });
 }
 
@@ -2131,7 +2227,8 @@ function confirmImport() {
     state.transactions.sort((a,b) => a.ts - b.ts);
   }
 
-  saveState();
+  saveAllTxns();
+  if (mode === 'replace') saveSettingsToIDB();
   closeModal('importModal');
   resetImport();
   render();
@@ -2199,7 +2296,7 @@ function submitEditTxn() {
   // Recalculate cohAfter for ALL transactions from scratch
   recalcCohAfter();
 
-  saveState();
+  saveAllTxns();
   closeModal('editModal');
   render();
   showToast('Transaction updated ✓');
@@ -2214,7 +2311,7 @@ function deleteTxn(id) {
     () => {
       state.transactions = state.transactions.filter(x => String(x.id) !== String(id));
       recalcCohAfter();
-      saveState(); render(); showToast('Transaction deleted');
+      saveAllTxns(); render(); showToast('Transaction deleted');
     }
   );
 }
@@ -2260,7 +2357,8 @@ function restoreJSON(input) {
           state.settings     = backup.state.settings     || { openCOH:20000, openCOG:20000, capital:40000 };
           if (backup.tallyState) { Object.assign(tallyState, backup.tallyState); saveTallyState(); }
           recalcCohAfter();
-          saveState();
+          saveAllTxns();
+          saveSettingsToIDB();
           render();
           showToast(`Restored ${count} transactions ✓`);
         }
@@ -2324,11 +2422,7 @@ function loadTallyState() {
 }
 
 function saveTallyState() {
-  try { localStorage.setItem('gcash_tally_v1', JSON.stringify(tallyState)); } catch(e) {
-    if (e && e.name === 'QuotaExceededError') {
-      showToast('Storage full! Please export your data to free up space.');
-    }
-  }
+  idbPut('tally', { id: 'main', ...tallyState }).catch(e => console.warn('[HalinIQ] saveTally failed', e));
 }
 
 let tallyDenomLocked = true;
@@ -2584,7 +2678,7 @@ function submitQE() {
   state.transactions.push(t);
   state.transactions.sort((a, b) => a.ts - b.ts);
   recalcCohAfter();
-  saveState();
+  saveAllTxns();
 
   // Clear inputs
   document.getElementById('qeAmount').value = '';
@@ -2806,7 +2900,7 @@ function checkBalanceMismatch() {
   const bal = calcBalances();
   const diff = Math.abs(bal.coh - (last.cohAfter || 0));
   if (diff > 1) {
-    banner.innerHTML = `⚠ Balance mismatch detected: calculated COH is ${fmt(bal.coh)} but last recorded is ${fmt(last.cohAfter||0)}. <a href="#" onclick="recalcCohAfter();saveState();render();return false;" style="color:var(--teal);font-weight:700;">Recalculate</a>`;
+    banner.innerHTML = `⚠ Balance mismatch detected: calculated COH is ${fmt(bal.coh)} but last recorded is ${fmt(last.cohAfter||0)}. <a href="#" onclick="recalcCohAfter();saveAllTxns();render();return false;" style="color:var(--teal);font-weight:700;">Recalculate</a>`;
     banner.classList.add('show');
   } else {
     banner.classList.remove('show');
@@ -3152,20 +3246,23 @@ function setupPWAIcons() {
 }
 
 // ── INIT ───────────────────────────────────────────────────────────────────
-loadState();
-loadTallyState();
-loadTallyLock();
-loadSettingsLock();
-loadTheme();
-state.currentTab = 'home'; // always start on home so the hardcoded active view matches what gets rendered
-render();
-checkBalanceMismatch();
-checkBackupWarning();
-setupScrollCollapse();
-setupStickyDate();
-setupPullToRefresh();
-setupPWAIcons();
-setTimeout(() => { renderTally(); renderHomeChart(); }, 0);
+async function init() {
+  loadTheme();
+  loadTallyLock();
+  loadSettingsLock();
+  await loadAll();
+  recalcCohAfter();
+  state.currentTab = 'home';
+  render();
+  checkBalanceMismatch();
+  checkBackupWarning();
+  setupScrollCollapse();
+  setupStickyDate();
+  setupPullToRefresh();
+  setupPWAIcons();
+  setTimeout(() => { renderTally(); renderHomeChart(); }, 0);
+}
+init();
 </script>
 </body>
 </html>
