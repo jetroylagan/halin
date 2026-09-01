@@ -261,6 +261,8 @@
   .txn-amt.out { color: var(--red); }
   .txn-earn-inline { font-size: 13px; font-family: var(--mono); font-weight: 600; text-align: right; flex-shrink: 0; font-variant-numeric: tabular-nums; min-width: 36px; }
   .txn-line2 { display: flex; align-items: center; gap: 6px; margin-top: 4px; margin-left: 43px; }
+  .txn-line3 { display: flex; align-items: center; margin-top: 3px; margin-left: 43px; }
+  .txn-notes-txt { font-size: 10px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-style: italic; }
   .txn-meta-txt { font-size: 10px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex-shrink: 1; min-width: 0; }
   .txn-sep { display: none; }
   .txn-bal-inline { display: flex; align-items: center; gap: 3px; flex-shrink: 0; }
@@ -1327,7 +1329,7 @@ function txnHTML(t, showActions = false, editOnly = false) {
     </div>
     <!-- Line 2: time · COH · GCash -->
     <div class="txn-line2">
-      <span class="txn-meta-txt">${timeStr}${t.notes ? ' · ' + esc(t.notes) : ''}</span>
+      <span class="txn-meta-txt">${timeStr}</span>
       <div class="txn-bal-inline">
         <span class="txn-bal-key">COH</span>
         <span class="txn-bal-coh">${fmt(t.cohAfter||0)}</span>
@@ -1336,6 +1338,8 @@ function txnHTML(t, showActions = false, editOnly = false) {
         <span class="txn-bal-cog">${fmt(t.cogAfter||0)}</span>
       </div>
     </div>
+    <!-- Line 3: notes (only if present) -->
+    ${t.notes ? `<div class="txn-line3"><span class="txn-notes-txt">${esc(t.notes)}</span></div>` : ''}
   </div>`;
 
   if (showActions) return `<div class="txn-swipe-wrap">${inner}</div>`;
