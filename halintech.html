@@ -430,12 +430,13 @@
 
   .rpt-table { width:100%; border-collapse:collapse; }
   .rpt-table thead tr { background:var(--surface2); }
-  .rpt-table th { padding:9px 12px; font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); white-space:nowrap; border-bottom:1px solid var(--border); }
-  .rpt-table th:first-child { text-align:left; padding-left:16px; }
+  .rpt-table { width:100%; border-collapse:collapse; min-width:0; }
+  .rpt-table th { padding:9px 8px; font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); white-space:nowrap; border-bottom:1px solid var(--border); }
+  .rpt-table th:first-child { text-align:left; padding-left:12px; }
   .rpt-table th:not(:first-child) { text-align:right; }
-  .rpt-table td { padding:10px 12px; font-size:12px; border-bottom:1px solid var(--border); vertical-align:middle; white-space:nowrap; }
+  .rpt-table td { padding:10px 8px; font-size:12px; border-bottom:1px solid var(--border); vertical-align:middle; white-space:nowrap; }
   .rpt-table tbody tr:last-child > td { border-bottom:none; }
-  .rpt-table td:first-child { text-align:left; padding-left:16px; font-size:13px; font-weight:600; color:var(--text); }
+  .rpt-table td:first-child { text-align:left; padding-left:12px; font-size:13px; font-weight:600; color:var(--text); }
   .rpt-table td:not(:first-child) { text-align:right; font-family:var(--mono); font-variant-numeric:tabular-nums; }
   .rpt-table tbody tr { cursor:pointer; transition:background .12s; }
   .rpt-table tbody tr:hover { background:var(--surface2); }
@@ -757,7 +758,7 @@
           <div id="rptTableTitle" style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);">Weekly Breakdown</div>
           <div id="rptTableCount" style="font-size:10px;color:var(--muted);"></div>
         </div>
-        <div id="rptTable"></div>
+        <div id="rptTable" style="overflow-x:auto;-webkit-overflow-scrolling:touch;"></div>
       </div>
       <div class="card" style="padding:0;overflow:hidden;margin-top:12px;">
         <div style="padding:10px 16px 8px;background:var(--surface2);border-bottom:1px solid var(--border);">
