@@ -1786,7 +1786,6 @@ function renderTrendTable(groups) {
         <th class="rpt-earn">Earn</th>
         <th class="rpt-in">In</th>
         <th class="rpt-out">Out</th>
-        <th class="rpt-txn">Txns</th>
       </tr>
     </thead>
     <tbody>
@@ -1814,10 +1813,9 @@ function renderTrendTable(groups) {
             <td class="rpt-earn">${fmt(g.earn)}</td>
             <td class="rpt-in">${fmt(g.amtIn)}</td>
             <td class="rpt-out">${fmt(g.amtOut)}</td>
-            <td class="rpt-txn">${g.txns}</td>
           </tr>
           <tr class="rpt-detail-tr ${isOpen ? 'open' : ''}" id="rptDetail-${safeKey}">
-            <td class="rpt-detail-td" colspan="5">
+            <td class="rpt-detail-td" colspan="4">
               <div class="rpt-detail-inner">
                 <table class="rpt-detail-table">${detailRows}</table>
               </div>
