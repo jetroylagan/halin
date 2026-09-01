@@ -271,12 +271,12 @@
   .txn-edit-inline { font-size: 10px; font-weight: 700; color: var(--blue); border: 1.5px solid rgba(129,140,248,.4); background: rgba(129,140,248,.08); border-radius: 10px; padding: 2px 8px; cursor: pointer; flex-shrink: 0; white-space: nowrap; margin-left: auto; }
 
   /* ── INLINE ACTION BUTTONS (Edit / Delete) ── */
-  .txn-action-btns { display: flex; flex-direction: row; align-items: center; gap: 5px; margin-left: auto; flex-shrink: 0; }
-  .txn-action-btn { border: none; border-radius: 8px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 28px; padding: 0; flex-shrink: 0; transition: opacity .15s, transform .1s; user-select: none; -webkit-tap-highlight-color: transparent; }
+  .txn-action-btns { display: flex; flex-direction: row; align-items: center; gap: 6px; margin-left: auto; flex-shrink: 0; padding-left: 10px; border-left: 1.5px solid var(--border); }
+  .txn-action-btn { border: none; border-radius: 8px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 34px; padding: 0; flex-shrink: 0; transition: opacity .15s, transform .1s; user-select: none; -webkit-tap-highlight-color: transparent; }
   .txn-action-btn:active { opacity: .75; transform: scale(.93); }
   .txn-action-btn.edit   { background: rgba(129,140,248,.15); color: var(--blue);  border: 1.5px solid rgba(129,140,248,.35); }
   .txn-action-btn.delete { background: rgba(248,113,113,.12); color: var(--red);   border: 1.5px solid rgba(248,113,113,.3);  }
-  .txn-action-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .txn-action-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
   /* ── RUNNING BALANCE BAR ── */
   .txn-balance-bar { height: 2px; margin: 0 14px 0 57px; border-radius: 2px; background: var(--border); overflow: hidden; }
