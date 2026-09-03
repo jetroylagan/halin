@@ -1282,7 +1282,10 @@ function render() {
   // Totals
   const cap = state.settings.capital;
   const total = bal.coh + bal.cog;
-  const deficit = total - (cap + bal.totalEarned);
+  const tallyGrandTotal = TALLY_DENOMS.reduce((s, d) => s + (tallyState.denoms[d] || 0) * d, 0)
+    + (tallyState.denoms.uncollected || 0)
+    + tallyState.gcash.reduce((s, a) => s + (parseFloat(a.amount) || 0), 0);
+  const deficit = total - tallyGrandTotal;
   const _el_dispCapital = document.getElementById('dispCapital'); if(_el_dispCapital) _el_dispCapital.textContent = fmt(cap);
   const _el_dispTotal = document.getElementById('dispTotal'); if(_el_dispTotal) _el_dispTotal.textContent = fmt(total);
   const earnPct = cap > 0 ? (bal.totalEarned / cap * 100).toFixed(2) + '%' : '0%';
@@ -1291,11 +1294,11 @@ function render() {
   const deficitBadge = document.getElementById('deficitBadge');
   const dEl = document.getElementById('dispDeficit');
   if (deficitBadge && dEl) {
-    if (deficit === 0) {
+    if (deficit === 0 || tallyGrandTotal === 0) {
       deficitBadge.style.display = 'none';
     } else {
       deficitBadge.style.display = 'inline-flex';
-      dEl.textContent = 'Deficit ' + fmt(deficit);
+      dEl.textContent = (deficit > 0 ? 'Short ' : 'Over ') + fmt(Math.abs(deficit));
     }
   }
 
@@ -2015,7 +2018,7 @@ function exportCSV() {
   const blob = new Blob([csv], { type: 'text/csv' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'gcash_tracker_' + new Date().toISOString().slice(0,10) + '.csv';
+  a.download = 'halin-export-csv-' + new Date().toISOString().slice(0,10) + '.csv';
   a.click();
   URL.revokeObjectURL(a.href);
   showToast('CSV exported ✓');
@@ -2464,7 +2467,7 @@ function backupJSON() {
   const a = document.createElement('a');
   const dateStr = new Date().toISOString().slice(0, 10);
   a.href = URL.createObjectURL(blob);
-  a.download = `gcash_backup_${dateStr}.json`;
+  a.download = `halin-backup-full-${dateStr}.json`;
   a.click();
   URL.revokeObjectURL(a.href);
   localStorage.setItem('gcash_last_backup', new Date().toISOString());
@@ -2929,9 +2932,11 @@ function renderHomeChart() {
   });
 }
 function updateMiniBalance(bal) {
-  const cap     = state.settings.capital;
   const total   = bal.coh + bal.cog;
-  const deficit = total - (cap + bal.totalEarned);
+  const tallyGrandTotal = TALLY_DENOMS.reduce((s, d) => s + (tallyState.denoms[d] || 0) * d, 0)
+    + (tallyState.denoms.uncollected || 0)
+    + tallyState.gcash.reduce((s, a) => s + (parseFloat(a.amount) || 0), 0);
+  const deficit = total - tallyGrandTotal;
   const mc = document.getElementById('miniCOH');
   const mg = document.getElementById('miniCOG');
   const me = document.getElementById('miniEarned');
@@ -3113,7 +3118,7 @@ function exportXLSX() {
   XLSX.utils.book_append_sheet(wb, wsSummary, 'Summary');
 
   const dateStr = new Date().toISOString().slice(0,10);
-  XLSX.writeFile(wb, `gcash_tracker_${dateStr}.xlsx`);
+  XLSX.writeFile(wb, `halin-export-excel-${dateStr}.xlsx`);
   showToast('Excel exported ✓');
 }
 
