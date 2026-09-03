@@ -3539,7 +3539,7 @@ async function sbPull() {
   setSbStatus('syncing', 'Pulling…');
   try {
     const [txnsRes, settingsRes, tallyRes] = await Promise.all([
-      _sbClient.from('transactions').select('*').eq('user_id', _sbUser.id).order('ts', { ascending: true }),
+      _sbClient.from('transactions').select('*').eq('user_id', _sbUser.id).order('ts', { ascending: true }).limit(100000),
       _sbClient.from('settings').select('*').eq('user_id', _sbUser.id).maybeSingle(),
       _sbClient.from('tally_state').select('*').eq('user_id', _sbUser.id).maybeSingle(),
     ]);
