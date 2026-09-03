@@ -198,12 +198,12 @@
 
   /* ── CARDS ── */
   .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 12px; }
-  .card-title { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+  .card-title { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
   #view-tally .card-title { font-size: 14px; letter-spacing: .06em; }
 
   /* ── FORM ELEMENTS ── */
   label { display: block; font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
-  input[type=text], input[type=number], input[type=date], select, textarea {
+  input[type=text], input[type=number], input[type=date], input[type=email], input[type=password], select, textarea {
     width: 100%; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm);
     color: var(--text); font-family: var(--font); font-size: 15px; padding: 10px 12px;
     outline: none; transition: border-color .2s, box-shadow .2s; -webkit-appearance: none; appearance: none;
@@ -214,6 +214,15 @@
   input:focus, select:focus, textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(52,211,153,.1); }
   select option { background: var(--surface); }
   .field { margin-bottom: 12px; }
+
+  /* SECTION ROW BUTTONS */
+  .section-row-label { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .row-btn { display: flex; align-items: center; gap: 10px; padding: 11px 12px; border-radius: var(--radius-sm); background: var(--surface2); border: 1px solid var(--border); cursor: pointer; font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 6px; width: 100%; font-family: var(--font); transition: background .15s; }
+  .row-btn:last-of-type { margin-bottom: 0; }
+  .row-btn i.row-icon { font-size: 16px; color: var(--teal); flex-shrink: 0; }
+  .row-btn i.row-arrow { margin-left: auto; color: var(--muted); font-size: 14px; }
+  .row-btn.danger { color: var(--red); }
+  .row-btn.danger i.row-icon { color: var(--red); }
 
   /* TYPE CHIPS */
   .chips { display: flex; flex-wrap: wrap; gap: 7px; }
@@ -365,14 +374,15 @@
   .flex-between { display: flex; justify-content: space-between; align-items: center; }
 
   /* ── THEME PICKER ── */
-  .theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-  .theme-card { background: var(--surface2); border: 2px solid var(--border); border-radius: 12px; padding: 10px 8px 8px; cursor: pointer; transition: border-color .15s, transform .1s; text-align: center; -webkit-tap-highlight-color: transparent; }
-  .theme-card:active { transform: scale(.93); }
-  .theme-card.active { border-color: var(--teal); background: rgba(52,211,153,.06); }
-  .theme-preview { display: flex; height: 28px; border-radius: 6px; overflow: hidden; margin-bottom: 6px; border: 1px solid rgba(0,0,0,.1); }
-  .theme-swatch { height: 100%; }
-  .theme-name { font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text2); }
-  .theme-card.active .theme-name { color: var(--teal); }
+  .theme-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .theme-card { display: flex; align-items: center; gap: 10px; background: var(--surface2); border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; cursor: pointer; transition: border-color .15s; -webkit-tap-highlight-color: transparent; }
+  .theme-card.active { border-color: var(--teal); }
+  .theme-preview { display: flex; gap: 3px; flex-shrink: 0; }
+  .theme-swatch { width: 12px; height: 12px; border-radius: 3px; }
+  .theme-name { font-size: 12px; font-weight: 600; color: var(--muted); flex: 1; text-align: left; }
+  .theme-card.active .theme-name { color: var(--text); }
+  .theme-check { color: var(--teal); font-size: 15px; display: none; }
+  .theme-card.active .theme-check { display: block; }
   hr.divider { border: none; border-top: 1px solid var(--border); margin: 12px 0; }
   .pill { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
   .pill-green { background: rgba(74,222,128,.12); color: var(--green); }
@@ -793,34 +803,40 @@
     <div class="view" id="view-settings">
       <div class="card" id="sbSyncCard">
         <div class="flex-between" style="margin-bottom:8px;">
-          <div class="card-title" style="margin-bottom:0;">Supabase Sync</div>
+          <div class="card-title" style="margin-bottom:0;">Cloud Backup</div>
           <span id="sbDot" class="fb-dot"></span>
         </div>
-        <p style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.5;">Sync to Supabase Postgres for cross-device access. Local storage always works without this.</p>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.5;">Back up your data online so it's never lost, even if you switch phones.</p>
         <div id="sbConfigForm">
-          <div class="field"><label>Supabase URL</label><input type="text" id="sbUrl" placeholder="https://xxxx.supabase.co" autocomplete="off"></div>
-          <div class="field"><label>Anon Key</label><input type="text" id="sbAnon" placeholder="eyJh…" autocomplete="off"></div>
+          <div class="section-row-label">Connection</div>
+          <div class="field"><label>Server Address</label><input type="text" id="sbUrl" placeholder="https://xxxx.supabase.co" autocomplete="off" style="font-size:13px;"></div>
+          <div class="field"><label>Access Key</label><input type="text" id="sbAnon" placeholder="eyJh…" autocomplete="off" style="font-size:13px;"></div>
+
+          <hr class="divider">
+
+          <div class="section-row-label">Sign In</div>
           <div id="sbSetupError" style="display:none;color:var(--red);font-size:12px;margin-bottom:10px;"></div>
-          <div class="field"><label>Email</label><input type="email" id="sbEmail" placeholder="you@email.com" autocomplete="email"></div>
-          <div class="field"><label>Password</label><input type="password" id="sbPassword" placeholder="••••••••" autocomplete="current-password"></div>
+          <div class="field"><label>Email</label><input type="email" id="sbEmail" placeholder="you@email.com" autocomplete="email" style="font-size:13px;"></div>
+          <div class="field"><label>Password</label><input type="password" id="sbPassword" placeholder="••••••••" autocomplete="current-password" style="font-size:13px;"></div>
           <button class="btn btn-primary" onclick="sbSignInWithEmail()" style="margin-bottom:10px;">Sign In</button>
+
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
             <hr style="flex:1;border:none;border-top:1px solid var(--border);margin:0;">
             <span style="font-size:11px;color:var(--muted);">or</span>
             <hr style="flex:1;border:none;border-top:1px solid var(--border);margin:0;">
           </div>
-          <button class="btn" onclick="sbSignInWithGoogle()" style="background:#fff;color:#3c4043;border:1.5px solid #dadce0;display:flex;align-items:center;justify-content:center;gap:10px;font-size:15px;font-weight:600;">
-            <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.08 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.93 2.31-8.16 2.31-6.26 0-11.57-3.59-13.46-8.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></svg>
+          <button class="btn btn-ghost" onclick="sbSignInWithGoogle()" style="display:flex;align-items:center;justify-content:center;gap:10px;font-size:14px;font-weight:600;">
+            <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.08 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.93 2.31-8.16 2.31-6.26 0-11.57-3.59-13.46-8.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></svg>
             Sign in with Google
           </button>
         </div>
         <div id="sbLoggedIn" style="display:none;">
           <div class="fb-status-row"><span id="sbDotInline" class="fb-dot connected"></span><span id="sbStatusMsg">Connected</span></div>
           <div style="font-size:12px;color:var(--muted);margin-bottom:12px;">Logged in as <strong id="sbUserEmail" style="color:var(--text);"></strong></div>
-          <button class="btn btn-green" onclick="sbPushAll(false)" style="margin-bottom:10px;">☁ Push to Supabase</button>
-          <button class="btn btn-ghost" onclick="sbPull()" style="margin-bottom:10px;">⬇ Pull from Supabase</button>
+          <button class="btn btn-green" onclick="sbPushAll(false)" style="margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:7px;"><i class="ti ti-cloud-upload"></i> Push to Supabase</button>
+          <button class="btn btn-ghost" onclick="sbPull()" style="margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:7px;"><i class="ti ti-cloud-download"></i> Pull from Supabase</button>
           <hr class="divider">
-          <button class="btn btn-ghost" style="color:var(--red);border-color:rgba(248,113,113,.4);" onclick="sbDoLogout()">Log Out</button>
+          <button class="btn btn-ghost" style="color:var(--red);border-color:rgba(248,113,113,.4);display:flex;align-items:center;justify-content:center;gap:7px;" onclick="sbDoLogout()"><i class="ti ti-logout"></i> Log Out</button>
         </div>
       </div>
 
@@ -831,30 +847,11 @@
         </div>
         <div class="field"><label>Starting Cash on Hand (₱)</label><input type="number" id="settingOpenCOH" value="20000" inputmode="decimal" disabled></div>
         <div class="field"><label>Starting GCash Balance (₱)</label><input type="number" id="settingOpenCOG" value="20000" inputmode="decimal" disabled></div>
-        <div class="field"><label>Capital (₱)</label><input type="number" id="settingCapital" value="40000" inputmode="decimal" disabled></div>
         <button id="settingsSaveBtn" class="btn btn-primary" onclick="saveSettings()" style="display:none;">Save Settings</button>
       </div>
 
       <div id="backupWarning" style="display:none;align-items:center;gap:10px;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.25);border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:12px;color:var(--red);line-height:1.4;">
-        <span>⚠</span><span id="backupWarningText"></span>
-      </div>
-
-      <div class="card">
-        <div class="card-title">Backup & Restore</div>
-        <p style="font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.5;">If your browser data is ever cleared, restore from this file to recover everything.</p>
-        <div id="backupMeta" style="display:none;background:var(--surface2);border-radius:var(--radius-sm);padding:8px 12px;margin-bottom:10px;font-size:12px;"></div>
-        <button class="btn btn-green" onclick="backupJSON()" style="margin-bottom:10px;">💾 Save Backup (.json)</button>
-        <button class="btn btn-ghost" onclick="document.getElementById('restoreFileInput').click()" style="margin-bottom:0;">📂 Restore from Backup</button>
-        <input type="file" id="restoreFileInput" accept=".json" style="display:none;" onchange="restoreJSON(this)">
-      </div>
-
-      <div class="card">
-        <div class="card-title">Data Management</div>
-        <button class="btn btn-primary" onclick="openImportModal()" style="margin-bottom:10px;">⬆ Import from Excel (.xlsx)</button>
-        <button class="btn btn-green" onclick="exportXLSX()" style="margin-bottom:10px;">⬇ Export to Excel (.xlsx)</button>
-        <button class="btn btn-ghost" onclick="exportCSV()" style="margin-bottom:10px;">⬇ Export to CSV</button>
-        <hr class="divider">
-        <button class="btn btn-ghost" style="color:var(--red);border-color:var(--red);" onclick="confirmReset()">🗑 Reset All Data</button>
+        <i class="ti ti-alert-triangle" style="font-size:16px;flex-shrink:0;"></i><span id="backupWarningText"></span>
       </div>
 
       <div class="card">
@@ -862,53 +859,80 @@
         <div class="theme-grid" id="themeGrid">
           <button class="theme-card" data-theme="midnight" onclick="applyTheme('midnight')">
             <div class="theme-preview">
-              <div class="theme-swatch" style="background:#07080F;flex:2"></div>
-              <div class="theme-swatch" style="background:#0E1020;flex:1.5"></div>
-              <div class="theme-swatch" style="background:#34D399;flex:1"></div>
+              <div class="theme-swatch" style="background:#07080F"></div>
+              <div class="theme-swatch" style="background:#0E1020"></div>
+              <div class="theme-swatch" style="background:#34D399"></div>
             </div>
             <div class="theme-name">Midnight</div>
+            <i class="ti ti-check theme-check"></i>
           </button>
           <button class="theme-card" data-theme="obsidian" onclick="applyTheme('obsidian')">
             <div class="theme-preview">
-              <div class="theme-swatch" style="background:#0A0A0A;flex:2"></div>
-              <div class="theme-swatch" style="background:#1C1C1C;flex:1.5"></div>
-              <div class="theme-swatch" style="background:#818CF8;flex:1"></div>
+              <div class="theme-swatch" style="background:#0A0A0A"></div>
+              <div class="theme-swatch" style="background:#1C1C1C"></div>
+              <div class="theme-swatch" style="background:#818CF8"></div>
             </div>
             <div class="theme-name">Obsidian</div>
+            <i class="ti ti-check theme-check"></i>
           </button>
           <button class="theme-card" data-theme="slate" onclick="applyTheme('slate')">
             <div class="theme-preview">
-              <div class="theme-swatch" style="background:#141928;flex:2"></div>
-              <div class="theme-swatch" style="background:#222B42;flex:1.5"></div>
-              <div class="theme-swatch" style="background:#FBBF24;flex:1"></div>
+              <div class="theme-swatch" style="background:#141928"></div>
+              <div class="theme-swatch" style="background:#222B42"></div>
+              <div class="theme-swatch" style="background:#FBBF24"></div>
             </div>
             <div class="theme-name">Slate</div>
+            <i class="ti ti-check theme-check"></i>
           </button>
           <button class="theme-card" data-theme="ocean" onclick="applyTheme('ocean')">
             <div class="theme-preview">
-              <div class="theme-swatch" style="background:#050D1A;flex:2"></div>
-              <div class="theme-swatch" style="background:#0F1F38;flex:1.5"></div>
-              <div class="theme-swatch" style="background:#38BDF8;flex:1"></div>
+              <div class="theme-swatch" style="background:#050D1A"></div>
+              <div class="theme-swatch" style="background:#0F1F38"></div>
+              <div class="theme-swatch" style="background:#38BDF8"></div>
             </div>
             <div class="theme-name">Ocean</div>
+            <i class="ti ti-check theme-check"></i>
           </button>
           <button class="theme-card" data-theme="forest" onclick="applyTheme('forest')">
             <div class="theme-preview">
-              <div class="theme-swatch" style="background:#071410;flex:2"></div>
-              <div class="theme-swatch" style="background:#122520;flex:1.5"></div>
-              <div class="theme-swatch" style="background:#34D399;flex:1"></div>
+              <div class="theme-swatch" style="background:#071410"></div>
+              <div class="theme-swatch" style="background:#122520"></div>
+              <div class="theme-swatch" style="background:#34D399"></div>
             </div>
             <div class="theme-name">Forest</div>
+            <i class="ti ti-check theme-check"></i>
           </button>
           <button class="theme-card" data-theme="violet" onclick="applyTheme('violet')">
             <div class="theme-preview">
-              <div class="theme-swatch" style="background:#0D0A1A;flex:2"></div>
-              <div class="theme-swatch" style="background:#1D1535;flex:1.5"></div>
-              <div class="theme-swatch" style="background:#A78BFA;flex:1"></div>
+              <div class="theme-swatch" style="background:#0D0A1A"></div>
+              <div class="theme-swatch" style="background:#1D1535"></div>
+              <div class="theme-swatch" style="background:#A78BFA"></div>
             </div>
             <div class="theme-name">Violet</div>
+            <i class="ti ti-check theme-check"></i>
           </button>
         </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Data Management</div>
+
+        <div class="section-row-label">Backup</div>
+        <div id="backupMeta" style="display:none;background:var(--surface2);border-radius:var(--radius-sm);padding:8px 12px;margin-bottom:8px;font-size:12px;"></div>
+        <button class="row-btn" onclick="backupJSON()"><i class="ti ti-device-floppy row-icon"></i> Save Backup (.json) <i class="ti ti-chevron-right row-arrow"></i></button>
+        <button class="row-btn" onclick="document.getElementById('restoreFileInput').click()"><i class="ti ti-folder-open row-icon"></i> Restore from Backup <i class="ti ti-chevron-right row-arrow"></i></button>
+        <input type="file" id="restoreFileInput" accept=".json" style="display:none;" onchange="restoreJSON(this)">
+
+        <hr class="divider">
+
+        <div class="section-row-label">Import / Export</div>
+        <button class="row-btn" onclick="openImportModal()"><i class="ti ti-file-upload row-icon"></i> Import from Excel (.xlsx) <i class="ti ti-chevron-right row-arrow"></i></button>
+        <button class="row-btn" onclick="exportXLSX()"><i class="ti ti-file-download row-icon"></i> Export to Excel (.xlsx) <i class="ti ti-chevron-right row-arrow"></i></button>
+        <button class="row-btn" onclick="exportCSV()"><i class="ti ti-file-type-csv row-icon"></i> Export to CSV <i class="ti ti-chevron-right row-arrow"></i></button>
+
+        <hr class="divider">
+
+        <button class="row-btn danger" onclick="confirmReset()"><i class="ti ti-trash row-icon"></i> Reset All Data <i class="ti ti-chevron-right row-arrow"></i></button>
       </div>
 
       <div class="card" style="text-align:center;">
@@ -1013,7 +1037,7 @@
     <div class="modal-title">Import from Excel <button class="modal-close" aria-label="Close" onclick="closeModal('importModal')">×</button></div>
     <div id="importStep1">
       <div style="background:var(--surface2);border:2px dashed var(--border);border-radius:var(--radius);padding:28px 20px;text-align:center;margin-bottom:16px;cursor:pointer;" onclick="document.getElementById('xlsxFileInput').click()">
-        <div style="font-size:32px;margin-bottom:8px;">📂</div>
+        <div style="font-size:32px;margin-bottom:8px;"><i class="ti ti-folder-open"></i></div>
         <div style="font-size:14px;font-weight:600;color:var(--text);">Tap to choose your .xlsx file</div>
         <div style="font-size:12px;color:var(--muted);margin-top:4px;">Reads the <strong>New_TrxLst</strong> sheet</div>
       </div>
@@ -1917,7 +1941,6 @@ function renderReports(bal) {
 function renderSettings() {
   document.getElementById('settingOpenCOH').value  = state.settings.openCOH;
   document.getElementById('settingOpenCOG').value  = state.settings.openCOG;
-  document.getElementById('settingCapital').value  = state.settings.capital;
   const activeTheme = localStorage.getItem('haliniq_theme') || 'midnight';
   document.querySelectorAll('.theme-card').forEach(c => {
     c.classList.toggle('active', c.dataset.theme === activeTheme);
@@ -2032,18 +2055,16 @@ function exportCSV() {
 // ── SETTINGS ───────────────────────────────────────────────────────────────
 function saveSettings() {
   if (parseFloat(document.getElementById('settingOpenCOH')?.value) < 0 ||
-      parseFloat(document.getElementById('settingOpenCOG')?.value) < 0 ||
-      parseFloat(document.getElementById('settingCapital')?.value) < 0) {
+      parseFloat(document.getElementById('settingOpenCOG')?.value) < 0) {
     showToast('Values cannot be negative.');
     return;
   }
   const newCOH = parseFloat(document.getElementById('settingOpenCOH').value) || 0;
   const newCOG = parseFloat(document.getElementById('settingOpenCOG').value) || 0;
-  const newCap = parseFloat(document.getElementById('settingCapital').value) || 0;
+  const newCap = newCOH + newCOG;
 
   const changed = newCOH !== state.settings.openCOH ||
-                  newCOG !== state.settings.openCOG ||
-                  newCap !== state.settings.capital;
+                  newCOG !== state.settings.openCOG;
 
   if (!changed) { showToast('No changes to save'); return; }
 
@@ -2605,7 +2626,7 @@ function toggleSettingsLock() {
 
 function applySettingsLock() {
   const locked = settingsLocked;
-  ['settingOpenCOH', 'settingOpenCOG', 'settingCapital'].forEach(id => {
+  ['settingOpenCOH', 'settingOpenCOG'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.disabled = locked;
   });
@@ -3422,11 +3443,11 @@ async function sbSignInWithGoogle() {
 
   const url  = (document.getElementById('sbUrl')?.value  || '').trim() || localStorage.getItem(SB_URL_KEY)  || '';
   const anon = (document.getElementById('sbAnon')?.value || '').trim() || localStorage.getItem(SB_ANON_KEY) || '';
-  if (!url || !anon) { showErr('Supabase URL and Anon Key are required.'); return; }
+  if (!url || !anon) { showErr('Server Address and Access Key are required.'); return; }
 
   localStorage.setItem(SB_URL_KEY, url);
   localStorage.setItem(SB_ANON_KEY, anon);
-  if (!sbInit()) { showErr('Failed to initialize Supabase client. Check the URL and Anon Key.'); return; }
+  if (!sbInit()) { showErr('Failed to connect. Check your Server Address and Access Key.'); return; }
 
   const { error } = await _sbClient.auth.signInWithOAuth({
     provider: 'google',
@@ -3445,12 +3466,12 @@ async function sbSignInWithEmail() {
   const email    = (document.getElementById('sbEmail')?.value    || '').trim();
   const password = (document.getElementById('sbPassword')?.value || '').trim();
 
-  if (!url || !anon)         { showErr('Supabase URL and Anon Key are required.'); return; }
+  if (!url || !anon)         { showErr('Server Address and Access Key are required.'); return; }
   if (!email || !password)   { showErr('Email and password are required.'); return; }
 
   localStorage.setItem(SB_URL_KEY, url);
   localStorage.setItem(SB_ANON_KEY, anon);
-  if (!sbInit()) { showErr('Failed to initialize Supabase client. Check the URL and Anon Key.'); return; }
+  if (!sbInit()) { showErr('Failed to connect. Check your Server Address and Access Key.'); return; }
 
   const { error } = await _sbClient.auth.signInWithPassword({ email, password });
   if (error) showErr('Sign-in failed: ' + error.message);
