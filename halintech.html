@@ -791,10 +791,6 @@
 
     <!-- SETTINGS VIEW -->
     <div class="view" id="view-settings">
-      <div id="backupWarning" style="display:none;align-items:center;gap:10px;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.25);border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:12px;color:var(--red);line-height:1.4;">
-        <span>⚠</span><span id="backupWarningText"></span>
-      </div>
-
       <div class="card" id="sbSyncCard">
         <div class="flex-between" style="margin-bottom:8px;">
           <div class="card-title" style="margin-bottom:0;">Supabase Sync</div>
@@ -805,11 +801,13 @@
           <div class="field"><label>Supabase URL</label><input type="text" id="sbUrl" placeholder="https://xxxx.supabase.co" autocomplete="off"></div>
           <div class="field"><label>Anon Key</label><input type="text" id="sbAnon" placeholder="eyJh…" autocomplete="off"></div>
           <div id="sbSetupError" style="display:none;color:var(--red);font-size:12px;margin-bottom:10px;"></div>
-          <div style="background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.25);border-radius:var(--radius-sm);padding:10px 12px;margin-bottom:12px;font-size:11px;color:var(--teal);line-height:1.6;">
-            Your URL and anon key are stored locally. The anon key is safe — Row Level Security restricts access to your own data only.
-            <hr style="border:none;border-top:1px solid rgba(52,211,153,.2);margin:8px 0 6px;">
-            <span style="color:var(--muted);">Add this to Supabase → Authentication → URL Configuration → Redirect URLs:</span><br>
-            <span id="sbRedirectUrlHint" style="color:var(--text);word-break:break-all;font-family:var(--mono);font-size:10px;user-select:all;"></span>
+          <div class="field"><label>Email</label><input type="email" id="sbEmail" placeholder="you@email.com" autocomplete="email"></div>
+          <div class="field"><label>Password</label><input type="password" id="sbPassword" placeholder="••••••••" autocomplete="current-password"></div>
+          <button class="btn btn-primary" onclick="sbSignInWithEmail()" style="margin-bottom:10px;">Sign In</button>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+            <hr style="flex:1;border:none;border-top:1px solid var(--border);margin:0;">
+            <span style="font-size:11px;color:var(--muted);">or</span>
+            <hr style="flex:1;border:none;border-top:1px solid var(--border);margin:0;">
           </div>
           <button class="btn" onclick="sbSignInWithGoogle()" style="background:#fff;color:#3c4043;border:1.5px solid #dadce0;display:flex;align-items:center;justify-content:center;gap:10px;font-size:15px;font-weight:600;">
             <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.08 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.93 2.31-8.16 2.31-6.26 0-11.57-3.59-13.46-8.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></svg>
@@ -835,6 +833,10 @@
         <div class="field"><label>Starting GCash Balance (₱)</label><input type="number" id="settingOpenCOG" value="20000" inputmode="decimal" disabled></div>
         <div class="field"><label>Capital (₱)</label><input type="number" id="settingCapital" value="40000" inputmode="decimal" disabled></div>
         <button id="settingsSaveBtn" class="btn btn-primary" onclick="saveSettings()" style="display:none;">Save Settings</button>
+      </div>
+
+      <div id="backupWarning" style="display:none;align-items:center;gap:10px;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.25);border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:12px;color:var(--red);line-height:1.4;">
+        <span>⚠</span><span id="backupWarningText"></span>
       </div>
 
       <div class="card">
@@ -998,7 +1000,7 @@
     <button type="button" class="tab"        onclick="switchTab('tally')"    id="tab-tally"><span class="tab-icon"><i class="ti ti-calculator" aria-hidden="true"></i></span>Tally</button>
     <button type="button" class="tab"        onclick="switchTab('settings')" id="tab-settings">
       <span class="tab-icon"><i class="ti ti-adjustments" aria-hidden="true"></i></span>
-      Settings<span class="backup-dot" id="backupDot"></span>
+      Settings
     </button>
   </div>
 
@@ -3433,6 +3435,27 @@ async function sbSignInWithGoogle() {
   if (error) showErr('Google sign-in failed: ' + error.message);
 }
 
+async function sbSignInWithEmail() {
+  const errEl  = document.getElementById('sbSetupError');
+  const showErr = msg => { if (errEl) { errEl.innerHTML = msg; errEl.style.display = ''; } };
+  if (errEl) errEl.style.display = 'none';
+
+  const url      = (document.getElementById('sbUrl')?.value      || '').trim() || localStorage.getItem(SB_URL_KEY)  || '';
+  const anon     = (document.getElementById('sbAnon')?.value     || '').trim() || localStorage.getItem(SB_ANON_KEY) || '';
+  const email    = (document.getElementById('sbEmail')?.value    || '').trim();
+  const password = (document.getElementById('sbPassword')?.value || '').trim();
+
+  if (!url || !anon)         { showErr('Supabase URL and Anon Key are required.'); return; }
+  if (!email || !password)   { showErr('Email and password are required.'); return; }
+
+  localStorage.setItem(SB_URL_KEY, url);
+  localStorage.setItem(SB_ANON_KEY, anon);
+  if (!sbInit()) { showErr('Failed to initialize Supabase client. Check the URL and Anon Key.'); return; }
+
+  const { error } = await _sbClient.auth.signInWithPassword({ email, password });
+  if (error) showErr('Sign-in failed: ' + error.message);
+}
+
 async function sbLogout() {
   if (_sbClient) await _sbClient.auth.signOut().catch(() => {});
   _sbUser = null;
@@ -3455,23 +3478,26 @@ async function sbPushAll(silent = false) {
   setSbStatus('syncing', 'Pushing…');
   try {
     // Full sync: delete all user rows then upsert current state
-    await _sbClient.from('transactions').delete().eq('user_id', _sbUser.id);
+    const { error: delErr } = await _sbClient.from('transactions').delete().eq('user_id', _sbUser.id);
+    if (delErr) throw Object.assign(delErr, { _step: 'delete transactions' });
+
     if (state.transactions.length) {
       const rows = state.transactions.map(t => ({
         id:          String(t.id),
         user_id:     _sbUser.id,
-        ts:          t.ts,
+        ts:          new Date(t.ts).toISOString(),
         type:        t.type,
         amount:      t.amount,
         earn:        t.earn,
-        fee_in_cash: t.feeInCash,
+        fee_in_cash: t.feeInCash ?? true,
         notes:       t.notes || '',
         coh_after:   t.cohAfter || 0,
         cog_after:   t.cogAfter || 0,
       }));
-      const { error } = await _sbClient.from('transactions').insert(rows);
-      if (error) throw error;
+      const { error: insErr } = await _sbClient.from('transactions').insert(rows);
+      if (insErr) throw Object.assign(insErr, { _step: 'insert transactions' });
     }
+
     await sbPushSettings();
     await sbPushTally();
     localStorage.setItem('gcash_last_backup', new Date().toISOString());
@@ -3479,29 +3505,33 @@ async function sbPushAll(silent = false) {
     renderBackupMeta(); updateBackupDot();
     setSbStatus('connected', 'Last push: ' + new Date().toLocaleTimeString('en-PH', { hour:'2-digit', minute:'2-digit' }));
   } catch(e) {
+    const step = e._step ? ` (${e._step})` : '';
+    const msg = e.message || e.msg || JSON.stringify(e);
     console.warn('[HalinIQ] sbPushAll error', e);
-    if (!silent) showToast('Push failed: ' + e.message);
+    if (!silent) showToast(`Push failed${step}: ${msg}`);
     setSbStatus('error');
   }
 }
 
 async function sbPushSettings() {
   if (!_sbClient || !_sbUser) return;
-  await _sbClient.from('settings').upsert({
+  const { error } = await _sbClient.from('settings').upsert({
     user_id:  _sbUser.id,
     open_coh: state.settings.openCOH,
     open_cog: state.settings.openCOG,
     capital:  state.settings.capital,
-  }).catch(e => console.warn('[HalinIQ] sbPushSettings error', e));
+  });
+  if (error) throw Object.assign(error, { _step: 'upsert settings' });
 }
 
 async function sbPushTally() {
   if (!_sbClient || !_sbUser) return;
-  await _sbClient.from('tally_state').upsert({
+  const { error } = await _sbClient.from('tally_state').upsert({
     user_id: _sbUser.id,
     denoms:  tallyState.denoms,
     gcash:   tallyState.gcash,
-  }).catch(e => console.warn('[HalinIQ] sbPushTally error', e));
+  });
+  if (error) throw Object.assign(error, { _step: 'upsert tally_state' });
 }
 
 async function sbPull() {
@@ -3516,7 +3546,7 @@ async function sbPull() {
 
     const txns = (txnsRes.data || []).map(r => ({
       id:       r.id,
-      ts:       r.ts,
+      ts:       new Date(r.ts).getTime(),
       type:     r.type,
       amount:   r.amount,
       earn:     r.earn,
@@ -3577,8 +3607,6 @@ function renderSbCard() {
   const anonEl = document.getElementById('sbAnon');
   if (urlEl  && !urlEl.value)  urlEl.value  = url;
   if (anonEl && !anonEl.value) anonEl.value = anon;
-  const hintEl = document.getElementById('sbRedirectUrlHint');
-  if (hintEl) hintEl.textContent = window.location.href.split('?')[0].split('#')[0];
 
   if (_sbUser) {
     form.style.display = 'none'; loggedIn.style.display = '';
