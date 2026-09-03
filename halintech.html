@@ -217,7 +217,7 @@
 
   /* TYPE CHIPS */
   .chips { display: flex; flex-wrap: wrap; gap: 7px; }
-  .chip { padding: 8px 15px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1.5px solid var(--border); color: var(--muted); cursor: pointer; transition: all .15s; user-select: none; background: var(--surface2); }
+  .chip { padding: 7px 4px; border-radius: 20px; font-size: 11.5px; font-weight: 600; border: 1.5px solid var(--border); color: var(--muted); cursor: pointer; transition: all .15s; user-select: none; background: var(--surface2); white-space: nowrap; text-align: center; }
   .chip.selected { border-color: var(--teal); color: var(--teal); background: rgba(52,211,153,.1); }
   .chip.out.selected { border-color: var(--red); color: var(--red); background: rgba(248,113,113,.1); }
 
@@ -1076,7 +1076,7 @@
   <div class="modal">
     <div class="modal-title">New Transaction <button class="modal-close" aria-label="Close" onclick="closeModal('addModal')">×</button></div>
     <div class="field"><label>Type</label>
-      <div class="chips" id="mTypeChips" style="flex-wrap:wrap;gap:7px;">
+      <div class="chips" id="mTypeChips" style="display:grid;grid-template-columns:repeat(5,1fr);gap:5px;">
         <div class="chip selected"  data-type="Cash-In"          onclick="mSelectType(this)">Cash-In</div>
         <div class="chip out"       data-type="Cash-Out"         onclick="mSelectType(this)">Cash-Out</div>
         <div class="chip"           data-type="Load"             onclick="mSelectType(this)">Load</div>
