@@ -151,7 +151,7 @@
   .pod.grand .pod-amount { background-image: linear-gradient(135deg, #4ADE80 0%, #86EFAC 60%, #22C55E 100%); }
   .tally-pods { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-top: 12px; }
   .tally-pods .pod { padding: 12px 12px; }
-  .tally-pods .pod-amount { font-size: 17px; letter-spacing: -.3px; }
+  .tally-pods .pod-amount { font-size: clamp(10px, 3.5vw, 17px); letter-spacing: -.3px; }
   .pod-sub { font-size: 10px; margin-top: 5px; position: relative; }
   .pod.coh .pod-sub { color: rgba(165,170,207,.38); }
   .pod.cog .pod-sub { color: rgba(110,231,183,.3); }
@@ -524,29 +524,32 @@
   .mini-chart-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px 8px; }
 
   /* Tally table */
-  .tally-table { width:100%; border-collapse:collapse; }
+  .tally-table { width:100%; border-collapse:collapse; table-layout:fixed; }
   .tally-table thead tr { background:var(--surface2); }
   .tally-table th { padding:8px 14px; font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); text-align:left; border-bottom:1px solid var(--border); }
   .tally-table th:nth-child(2), .tally-table th:nth-child(3) { text-align:right; }
   .tally-table td { padding:7px 14px; font-size:13px; border-bottom:1px solid var(--border); color:var(--text); vertical-align:middle; }
   .tally-table tbody tr:last-child td { border-bottom:none; }
   .tally-denom { font-family:var(--mono); font-weight:600; color:var(--teal); text-align:right; font-variant-numeric:tabular-nums; }
-  .tally-qty-wrap { display:flex; align-items:center; justify-content:flex-end; gap:4px; }
+  .tally-qty-wrap { display:flex; align-items:center; gap:4px; width:100%; }
   .tally-qty-btn { background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm); color:var(--text); font-size:16px; font-weight:700; width:30px; height:30px; display:flex; align-items:center; justify-content:center; cursor:pointer; user-select:none; flex-shrink:0; transition:background .15s, border-color .15s; line-height:1; }
   .tally-qty-btn:active { background:var(--surface3,#2a2d45); border-color:var(--teal); }
-  .tally-qty-input { width:48px; background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm); color:var(--text); font-family:var(--mono); font-size:14px; padding:5px 4px; text-align:center; outline:none; -webkit-appearance:none; appearance:none; }
+  .tally-qty-input { flex:1; min-width:0; background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm); color:var(--text); font-family:var(--mono); font-size:14px; padding:5px 4px; text-align:center; outline:none; -webkit-appearance:none; appearance:none; }
   .tally-qty-input:focus { border-color:var(--teal); }
-  .tally-sum { font-family:var(--mono); font-size:13px; font-weight:600; color:var(--amber); text-align:right; font-variant-numeric:tabular-nums; }
-  .tally-sum-input { width:100%; background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm); color:var(--amber); font-family:var(--mono); font-size:13px; padding:5px 8px; text-align:right; outline:none; -webkit-appearance:none; appearance:none; }
+  .tally-sum { font-family:var(--mono); font-size:clamp(9px, 2.8vw, 13px); font-weight:600; color:var(--amber); text-align:right; font-variant-numeric:tabular-nums; }
+  .tally-sum-input { width:100%; background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm); color:var(--amber); font-family:var(--mono); font-size:clamp(9px, 2.8vw, 13px); padding:5px 8px; text-align:right; outline:none; -webkit-appearance:none; appearance:none; }
   .tally-sum-input:focus { border-color:var(--teal); }
   .tally-total-row { background:var(--surface2); }
   .tally-total-row td { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); padding:10px 14px; border-top:2px solid var(--border); border-bottom:none; }
-  .tally-total-val { font-family:var(--mono); font-size:16px; font-weight:800; color:var(--teal); text-align:right; font-variant-numeric:tabular-nums; }
+  .tally-total-val { font-family:var(--mono); font-size:clamp(11px, 3.2vw, 16px); font-weight:800; color:var(--teal); text-align:right; font-variant-numeric:tabular-nums; }
   #tallyCOHTotal { color: var(--amber); }
   #tallyGCashTotal { color: var(--teal); }
   .tally-gcash-name { background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm); color:var(--text); font-size:13px; padding:5px 8px; outline:none; width:100%; }
   .tally-gcash-name:focus { border-color:var(--teal); }
   .tally-del-btn { background:none; border:none; color:var(--muted); font-size:16px; cursor:pointer; padding:2px 4px; }
+  .tally-row-lock-btn { border-radius:8px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; width:36px; height:34px; padding:0; flex-shrink:0; transition:opacity .15s, transform .1s; user-select:none; -webkit-tap-highlight-color:transparent; font-size:16px; background:rgba(255,255,255,.04); color:var(--muted); border:1.5px solid var(--border); }
+  .tally-row-lock-btn:active { opacity:.75; transform:scale(.93); }
+  .tally-row-lock-btn.locked { background:rgba(251,191,36,.1); color:var(--amber); border-color:rgba(251,191,36,.4); }
 
   /* Pull-to-refresh */
   #ptr-indicator { position: absolute; top: -44px; left: 50%; transform: translateX(-50%); width: 36px; height: 36px; border-radius: 50%; background: var(--surface3); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 18px; transition: opacity .2s; opacity: 0; z-index: 5; box-shadow: 0 4px 12px rgba(0,0,0,.4); }
@@ -555,8 +558,7 @@
   .ptr-spinning { animation: spin .6s linear infinite; display: inline-block; }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
 <body>
 <div id="app">
@@ -865,51 +867,31 @@
         <input type="file" id="restoreFileInput" accept=".json" style="display:none;" onchange="restoreJSON(this)">
       </div>
 
-      <div class="card" id="fbSyncCard">
+      <div class="card" id="sbSyncCard">
         <div class="flex-between" style="margin-bottom:8px;">
-          <div class="card-title" style="margin-bottom:0;">Firebase Sync</div>
-          <span id="fbDot" class="fb-dot"></span>
+          <div class="card-title" style="margin-bottom:0;">Supabase Sync</div>
+          <span id="sbDot" class="fb-dot"></span>
         </div>
-        <p style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.5;">Sync to Firestore for cross-device access. LocalStorage and IndexedDB always work without this.</p>
-        <div id="fbConfigForm">
-          <div class="field"><label>API Key</label><input type="text" id="fbApiKey" placeholder="AIzaSy…" autocomplete="off"></div>
-          <div class="field"><label>Project ID</label><input type="text" id="fbProjectId" placeholder="my-project-id" autocomplete="off"></div>
-          <div class="field"><label>Collection</label><input type="text" id="fbCollection" placeholder="haliniq (default)"></div>
-          <div class="field"><label>Document ID</label><input type="text" id="fbDocId" placeholder="data (default)"></div>
-          <div class="toggle-row" style="margin-bottom:12px;">
-            <div><div class="toggle-label">Auto-sync on Save</div><div class="toggle-sub">Push to Firebase after every transaction</div></div>
-            <label class="switch"><input type="checkbox" id="fbAutoSync"><span class="slider"></span></label>
-          </div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.5;">Sync to Supabase Postgres for cross-device access. Local storage always works without this.</p>
+        <div id="sbConfigForm">
+          <div class="field"><label>Supabase URL</label><input type="text" id="sbUrl" placeholder="https://xxxx.supabase.co" autocomplete="off"></div>
+          <div class="field"><label>Anon Key</label><input type="text" id="sbAnon" placeholder="eyJh…" autocomplete="off"></div>
           <hr class="divider">
-          <div class="field"><label>Master Password</label><input type="password" id="fbPassword" placeholder="Encrypts your credentials locally" autocomplete="new-password"></div>
-          <div class="field"><label>Confirm Password</label><input type="password" id="fbPasswordConfirm" placeholder="Re-enter password" autocomplete="new-password"></div>
-          <div id="fbSetupError" style="display:none;color:var(--red);font-size:12px;margin-bottom:10px;"></div>
-          <div style="background:rgba(129,140,248,.08);border:1px solid rgba(129,140,248,.25);border-radius:var(--radius-sm);padding:10px 12px;margin-bottom:12px;font-size:11px;color:var(--blue);line-height:1.6;">
-            🔒 Credentials are encrypted with AES-256-GCM before being stored. Only your password can decrypt them.
+          <div class="field"><label>Email</label><input type="email" id="sbEmail" placeholder="you@example.com" autocomplete="email"></div>
+          <div class="field"><label>Password</label><input type="password" id="sbPwd" placeholder="Your password" autocomplete="current-password" onkeydown="if(event.key==='Enter')sbSaveConfigAndLogin()"></div>
+          <div id="sbSetupError" style="display:none;color:var(--red);font-size:12px;margin-bottom:10px;"></div>
+          <div style="background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.25);border-radius:var(--radius-sm);padding:10px 12px;margin-bottom:12px;font-size:11px;color:var(--teal);line-height:1.6;">
+            Your URL and anon key are stored locally. The anon key is safe — Row Level Security on your Supabase project restricts access to your own data only.
           </div>
-          <div style="background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.25);border-radius:var(--radius-sm);padding:10px 12px;margin-bottom:12px;font-size:11px;color:var(--amber);line-height:1.6;">
-            ⚠ Requires a Firebase project with Firestore enabled and read/write security rules. For personal use only.
-          </div>
-          <button class="btn btn-primary" onclick="fbSaveConfig()">Connect &amp; Encrypt</button>
+          <button class="btn btn-primary" onclick="sbSaveConfigAndLogin()">Connect &amp; Log In</button>
         </div>
-        <div id="fbLockedState" style="display:none;">
-          <div class="fb-status-row"><span class="fb-dot error"></span><span>Locked — credentials encrypted</span></div>
-          <p style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.5;">Enter your master password to unlock Firebase sync for this session.</p>
-          <div class="field"><input type="password" id="fbUnlockPwd" placeholder="Master password…" autocomplete="current-password" onkeydown="if(event.key==='Enter')fbUnlock()"></div>
-          <div id="fbUnlockError" style="display:none;color:var(--red);font-size:12px;margin-bottom:10px;"></div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
-            <button class="btn btn-ghost" onclick="fbSkipUnlock()">Skip</button>
-            <button class="btn btn-primary" onclick="fbUnlock()">Unlock</button>
-          </div>
+        <div id="sbLoggedIn" style="display:none;">
+          <div class="fb-status-row"><span id="sbDotInline" class="fb-dot connected"></span><span id="sbStatusMsg">Connected</span></div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:12px;">Logged in as <strong id="sbUserEmail" style="color:var(--text);"></strong></div>
+          <button class="btn btn-green" onclick="sbPushAll(false)" style="margin-bottom:10px;">☁ Push to Supabase</button>
+          <button class="btn btn-ghost" onclick="sbPull()" style="margin-bottom:10px;">⬇ Pull from Supabase</button>
           <hr class="divider">
-          <button class="btn btn-ghost btn-sm" style="color:var(--red);border-color:rgba(248,113,113,.4);width:100%;" onclick="fbDisconnect()">Remove &amp; Reconfigure</button>
-        </div>
-        <div id="fbSyncActions" style="display:none;">
-          <div class="fb-status-row"><span id="fbDotInline" class="fb-dot connected"></span><span id="fbStatusMsg">Connected</span></div>
-          <button class="btn btn-green" onclick="fbPushData(false)" style="margin-bottom:10px;">☁ Push to Firebase</button>
-          <button class="btn btn-ghost" onclick="fbPullData()" style="margin-bottom:10px;">⬇ Pull from Firebase</button>
-          <hr class="divider">
-          <button class="btn btn-ghost" style="color:var(--red);border-color:rgba(248,113,113,.4);" onclick="fbDisconnect()">Disconnect Firebase</button>
+          <button class="btn btn-ghost" style="color:var(--red);border-color:rgba(248,113,113,.4);" onclick="sbDoLogout()">Log Out</button>
         </div>
       </div>
 
@@ -944,17 +926,18 @@
         <div style="padding:12px 16px 8px;" class="flex-between">
           <div class="card-title" style="margin-bottom:0;">Cash on Hand Breakdown</div>
           <div style="display:flex;align-items:center;gap:6px;">
-            <button id="tallyDenomLockBtn" class="btn btn-ghost btn-sm" onclick="toggleDenomLock()" title="Lock"><i class="ti ti-lock-open"></i></button>
             <button id="tallyClearBtn" class="btn btn-ghost btn-sm" onclick="clearTally()">Clear</button>
           </div>
         </div>
         <table class="tally-table" id="tallyDenomTable">
-          <thead><tr><th>Denom</th><th>Qty</th><th>Sum</th></tr></thead>
+          <thead><tr><th style="width:80px;">Denom</th><th style="width:150px;">Qty</th><th>Sum</th><th style="width:52px;padding-right:10px;"></th></tr></thead>
           <tbody id="tallyDenomBody"></tbody>
           <tfoot>
             <tr class="tally-total-row">
-              <td colspan="2">Total Cash on Hand</td>
+              <td>Total Cash</td>
+              <td></td>
               <td id="tallyCOHTotal" class="tally-total-val">₱0</td>
+              <td></td>
             </tr>
           </tfoot>
         </table>
@@ -964,18 +947,17 @@
         <div style="padding:12px 16px 8px;" class="flex-between">
           <div class="card-title" style="margin-bottom:0;">GCash Accounts</div>
           <div style="display:flex;align-items:center;gap:6px;">
-            <button id="tallyGCashLockBtn" class="btn btn-ghost btn-sm" onclick="toggleGCashLock()" title="Lock"><i class="ti ti-lock-open"></i></button>
             <button id="tallyAddGCashBtn" class="btn btn-ghost btn-sm" onclick="addGCashRow()">+ Add</button>
           </div>
         </div>
         <table class="tally-table" id="tallyGCashTable">
-          <thead><tr><th>Account</th><th>Amount</th><th></th></tr></thead>
+          <thead><tr><th>Account</th><th>Amount</th><th style="width:44px;"></th><th style="width:52px;padding-right:10px;"></th></tr></thead>
           <tbody id="tallyGCashBody"></tbody>
           <tfoot>
             <tr class="tally-total-row">
               <td>Total GCash Balance</td>
               <td id="tallyGCashTotal" class="tally-total-val">₱0</td>
-              <td></td>
+              <td colspan="2"></td>
             </tr>
           </tfoot>
         </table>
@@ -1206,7 +1188,7 @@ function saveAllTxns() {
     tx.oncomplete = () => resolve();
     tx.onerror    = e => reject(e.target.error);
   })).then(() => {
-    fbScheduleAutoSync();
+    sbScheduleSync();
   }).catch(e => console.warn('[HalinIQ] saveAllTxns failed', e));
 }
 
@@ -2058,7 +2040,7 @@ function saveSettings() {
   state.settings.openCOH = newCOH;
   state.settings.openCOG = newCOG;
   state.settings.capital = newCap;
-  saveSettingsToIDB(); render(); showToast('Settings saved ✓');
+  saveSettingsToIDB(); sbPushSettings(); render(); showToast('Settings saved ✓');
 }
 
 // ── THEME ──────────────────────────────────────────────────────────────────
@@ -2505,69 +2487,93 @@ function loadTallyState() {
 
 function saveTallyState() {
   idbPut('tally', { id: 'main', ...tallyState }).catch(e => console.warn('[HalinIQ] saveTally failed', e));
+  sbPushTally();
 }
 
-let tallyDenomLocked = true;
-let tallyGCashLocked = true;
+let denomLocks = Object.fromEntries(TALLY_DENOMS.map(d => [d, true]));
+let gcashLocks = [];
 let settingsLocked = true;
 
 function loadTallyLock() {
   try {
-    const d = localStorage.getItem('tally_denom_locked');
-    const g = localStorage.getItem('tally_gcash_locked');
-    if (d !== null) tallyDenomLocked = d === 'true';
-    if (g !== null) tallyGCashLocked = g === 'true';
+    const dl = localStorage.getItem('tally_denom_row_locks');
+    if (dl) {
+      const parsed = JSON.parse(dl);
+      TALLY_DENOMS.forEach(d => { denomLocks[d] = parsed[d] !== undefined ? parsed[d] : true; });
+    } else {
+      const legacy = localStorage.getItem('tally_denom_locked');
+      const val = legacy === null ? true : legacy === 'true';
+      TALLY_DENOMS.forEach(d => { denomLocks[d] = val; });
+    }
+    const gl = localStorage.getItem('tally_gcash_row_locks');
+    if (gl) gcashLocks = JSON.parse(gl);
   } catch(e) {}
 }
 
 function saveTallyLock() {
   try {
-    localStorage.setItem('tally_denom_locked', tallyDenomLocked);
-    localStorage.setItem('tally_gcash_locked', tallyGCashLocked);
+    localStorage.setItem('tally_denom_row_locks', JSON.stringify(denomLocks));
+    localStorage.setItem('tally_gcash_row_locks', JSON.stringify(gcashLocks));
   } catch(e) {}
 }
 
 function toggleDenomLock() {
-  tallyDenomLocked = !tallyDenomLocked;
+  const allLocked = TALLY_DENOMS.every(d => denomLocks[d]);
+  TALLY_DENOMS.forEach(d => { denomLocks[d] = !allLocked; });
   saveTallyLock();
   applyDenomLock();
 }
 
-function toggleGCashLock() {
-  tallyGCashLocked = !tallyGCashLocked;
+function toggleDenomRowLock(d) {
+  denomLocks[d] = !denomLocks[d];
+  saveTallyLock();
+  applyDenomLock();
+}
+
+function toggleGCashRowLock(i) {
+  gcashLocks[i] = !gcashLocks[i];
   saveTallyLock();
   applyGCashLock();
 }
 
 function applyDenomLock() {
-  const locked = tallyDenomLocked;
-  document.querySelectorAll('#tallyDenomBody input').forEach(el => el.disabled = locked);
-  document.querySelectorAll('#tallyDenomBody .tally-qty-btn').forEach(el => {
-    el.style.opacity = locked ? '0.3' : '';
-    el.style.pointerEvents = locked ? 'none' : '';
+  const rows = document.querySelectorAll('#tallyDenomBody tr');
+  TALLY_DENOMS.forEach((d, idx) => {
+    const locked = denomLocks[d];
+    if (!rows[idx]) return;
+    const input = rows[idx].querySelector('.tally-qty-input');
+    if (input) input.disabled = locked;
+    rows[idx].querySelectorAll('.tally-qty-btn').forEach(el => {
+      el.style.opacity = locked ? '0.3' : '';
+      el.style.pointerEvents = locked ? 'none' : '';
+    });
+    const rowLockBtn = rows[idx].querySelector('.tally-row-lock-btn');
+    if (rowLockBtn) {
+      rowLockBtn.innerHTML = `<i class="ti ${locked ? 'ti-lock' : 'ti-lock-open'}"></i>`;
+      rowLockBtn.className = `tally-row-lock-btn${locked ? ' locked' : ''}`;
+      rowLockBtn.title = locked ? 'Unlock' : 'Lock';
+    }
   });
+  const allLocked = TALLY_DENOMS.every(d => denomLocks[d]);
   const clearBtn = document.getElementById('tallyClearBtn');
-  if (clearBtn) clearBtn.style.display = locked ? 'none' : '';
-  const btn = document.getElementById('tallyDenomLockBtn');
-  if (btn) {
-    btn.innerHTML = `<i class="ti ${locked ? 'ti-lock' : 'ti-lock-open'}"></i>`;
-    btn.className = `btn btn-sm ${locked ? 'tally-lock-active' : 'btn-ghost'}`;
-    btn.title = locked ? 'Unlock' : 'Lock';
-  }
+  if (clearBtn) clearBtn.style.display = allLocked ? 'none' : '';
 }
 
 function applyGCashLock() {
-  const locked = tallyGCashLocked;
-  document.querySelectorAll('#tallyGCashBody input').forEach(el => el.disabled = locked);
-  document.querySelectorAll('#tallyGCashBody .tally-del-btn').forEach(el => el.style.visibility = locked ? 'hidden' : '');
-  const addBtn = document.getElementById('tallyAddGCashBtn');
-  if (addBtn) addBtn.style.display = locked ? 'none' : '';
-  const btn = document.getElementById('tallyGCashLockBtn');
-  if (btn) {
-    btn.innerHTML = `<i class="ti ${locked ? 'ti-lock' : 'ti-lock-open'}"></i>`;
-    btn.className = `btn btn-sm ${locked ? 'tally-lock-active' : 'btn-ghost'}`;
-    btn.title = locked ? 'Unlock' : 'Lock';
-  }
+  const rows = document.querySelectorAll('#tallyGCashBody tr');
+  tallyState.gcash.forEach((_, i) => {
+    const locked = !!gcashLocks[i];
+    if (!rows[i]) return;
+    rows[i].querySelectorAll('input').forEach(el => el.disabled = locked);
+    const delBtn = rows[i].querySelector('.tally-del-btn');
+    if (delBtn) delBtn.style.visibility = locked ? 'hidden' : '';
+    const lockBtn = rows[i].querySelector('.tally-row-lock-btn');
+    if (lockBtn) {
+      lockBtn.innerHTML = `<i class="ti ${locked ? 'ti-lock' : 'ti-lock-open'}"></i>`;
+      lockBtn.className = `tally-row-lock-btn${locked ? ' locked' : ''}`;
+      lockBtn.title = locked ? 'Unlock' : 'Lock';
+    }
+  });
 }
 
 function loadSettingsLock() {
@@ -2610,6 +2616,7 @@ function renderTally() {
   tbody.innerHTML = TALLY_DENOMS.map(d => {
     const qty = tallyState.denoms[d] || 0;
     const sum = qty * d;
+    const locked = denomLocks[d];
     return `<tr>
       <td class="tally-denom">₱${d.toLocaleString()}</td>
       <td><div class="tally-qty-wrap">
@@ -2619,6 +2626,9 @@ function renderTally() {
         <div class="tally-qty-btn" onclick="stepTallyDenom(${d},1)">+</div>
       </div></td>
       <td class="tally-sum">${sum === 0 ? '-' : sum.toLocaleString('en-PH', {minimumFractionDigits:2})}</td>
+      <td style="text-align:center;padding:7px 10px 7px 4px;">
+        <button class="tally-row-lock-btn${locked ? ' locked' : ''}" onclick="toggleDenomRowLock(${d})" title="${locked ? 'Unlock' : 'Lock'}"><i class="ti ${locked ? 'ti-lock' : 'ti-lock-open'}"></i></button>
+      </td>
     </tr>`;
   }).join('') +
   `<tr>
@@ -2626,6 +2636,7 @@ function renderTally() {
     <td></td>
     <td><input type="number" class="tally-sum-input" value="${tallyState.denoms.uncollected || ''}" min="0" inputmode="decimal" placeholder="-"
       oninput="updateTallyUncollected(this.value)" onchange="updateTallyUncollected(this.value)"></td>
+    <td></td>
   </tr>`;
 
   updateTallyTotals();
@@ -2687,15 +2698,20 @@ function updateTallyTotals() {
 function renderGCashTable() {
   const tbody = document.getElementById('tallyGCashBody');
   if (!tbody) return;
-  tbody.innerHTML = tallyState.gcash.map((a, i) =>
-    `<tr>
+  while (gcashLocks.length < tallyState.gcash.length) gcashLocks.push(false);
+  tbody.innerHTML = tallyState.gcash.map((a, i) => {
+    const locked = !!gcashLocks[i];
+    return `<tr>
       <td><input class="tally-gcash-name" type="text" value="${a.name}" placeholder="Account name"
         oninput="updateGCashName(${i}, this.value)"></td>
       <td style="text-align:right;"><input type="number" class="tally-qty-input" style="width:100%;max-width:120px;" value="${a.amount || ''}" min="0" inputmode="decimal" placeholder="-"
         oninput="updateGCashAmt(${i}, this.value)" onchange="updateGCashAmt(${i}, this.value)"></td>
-      <td><button class="tally-del-btn" onclick="deleteGCashRow(${i})">×</button></td>
-    </tr>`
-  ).join('');
+      <td style="text-align:center;"><button class="tally-del-btn" onclick="deleteGCashRow(${i})">×</button></td>
+      <td style="text-align:center;padding:7px 10px 7px 4px;">
+        <button class="tally-row-lock-btn${locked ? ' locked' : ''}" onclick="toggleGCashRowLock(${i})" title="${locked ? 'Unlock' : 'Lock'}"><i class="ti ${locked ? 'ti-lock' : 'ti-lock-open'}"></i></button>
+      </td>
+    </tr>`;
+  }).join('');
   updateTallyTotals();
   applyGCashLock();
 }
@@ -2719,7 +2735,9 @@ function addGCashRow() {
 
 function deleteGCashRow(i) {
   tallyState.gcash.splice(i, 1);
+  gcashLocks.splice(i, 1);
   saveTallyState();
+  saveTallyLock();
   renderGCashTable();
 }
 
@@ -3327,234 +3345,231 @@ function setupPWAIcons() {
   } catch (e) { console.error('PWA icon setup failed:', e); }
 }
 
-// ── FIREBASE SYNC (AES-256-GCM encrypted credentials) ──────────────────────
-let _fbApp = null;
-let _fbDb  = null;
-let _fbCfg = null;          // plaintext config — lives only in memory, never written to storage
-let _fbSyncTimer = null;
-const FB_CFG_KEY = 'haliniq_firebase_config'; // stores encrypted blob only
+// ── SUPABASE SYNC ───────────────────────────────────────────────────────────
+const SB_URL_KEY  = 'haliniq_sb_url';
+const SB_ANON_KEY = 'haliniq_sb_anon';
 
-// ── Crypto helpers (Web Crypto API) ────────────────────────────────────────
-function _b64e(buf) { return btoa(String.fromCharCode(...new Uint8Array(buf))); }
-function _b64d(s)   { return Uint8Array.from(atob(s), c => c.charCodeAt(0)); }
+let _sbClient   = null;
+let _sbUser     = null;
+let _sbSyncTimer = null;
 
-async function _deriveKey(password, salt) {
-  const enc = new TextEncoder();
-  const raw = await crypto.subtle.importKey('raw', enc.encode(password), 'PBKDF2', false, ['deriveKey']);
-  return crypto.subtle.deriveKey(
-    { name: 'PBKDF2', salt, iterations: 150000, hash: 'SHA-256' },
-    raw,
-    { name: 'AES-GCM', length: 256 },
-    false,
-    ['encrypt', 'decrypt']
-  );
-}
-
-async function _encryptCfg(cfg, password) {
-  const salt = crypto.getRandomValues(new Uint8Array(16));
-  const iv   = crypto.getRandomValues(new Uint8Array(12));
-  const key  = await _deriveKey(password, salt);
-  const enc  = new TextEncoder().encode(JSON.stringify(cfg));
-  const ct   = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, enc);
-  return { ct: _b64e(ct), iv: _b64e(iv), salt: _b64e(salt) };
-}
-
-async function _decryptCfg(stored, password) {
-  const key  = await _deriveKey(password, _b64d(stored.salt));
-  const pt   = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: _b64d(stored.iv) }, key, _b64d(stored.ct));
-  return JSON.parse(new TextDecoder().decode(pt));
-}
-
-// ── Internal helpers ────────────────────────────────────────────────────────
-function _fbGetStored() {
-  try { const r = localStorage.getItem(FB_CFG_KEY); return r ? JSON.parse(r) : null; } catch(e) { return null; }
-}
-
-async function fbInit(cfg) {
-  if (typeof firebase === 'undefined') return false;
-  if (!cfg || !cfg.apiKey || !cfg.projectId) { _fbApp = null; _fbDb = null; _fbCfg = null; return false; }
-  _fbCfg = cfg;
+function sbInit() {
+  const url  = localStorage.getItem(SB_URL_KEY)  || '';
+  const anon = localStorage.getItem(SB_ANON_KEY) || '';
+  if (!url || !anon) return false;
   try {
-    try { await firebase.app('haliniq').delete(); } catch(e) {}
-    _fbApp = firebase.initializeApp({
-      apiKey:     cfg.apiKey,
-      authDomain: cfg.projectId + '.firebaseapp.com',
-      projectId:  cfg.projectId,
-    }, 'haliniq');
-    _fbDb = firebase.firestore(_fbApp);
+    _sbClient = supabase.createClient(url, anon);
     return true;
   } catch(e) {
-    console.warn('[HalinIQ] Firebase init error', e);
-    _fbApp = null; _fbDb = null;
+    console.warn('[HalinIQ] Supabase init error', e);
     return false;
   }
 }
 
-function fbRef() {
-  if (!_fbDb || !_fbCfg) return null;
-  return _fbDb.collection(_fbCfg.collectionName || 'haliniq').doc(_fbCfg.docId || 'data');
-}
-
-// ── Card renderer ───────────────────────────────────────────────────────────
-function renderFbCard() {
-  const stored  = _fbGetStored();
-  const form    = document.getElementById('fbConfigForm');
-  const locked  = document.getElementById('fbLockedState');
-  const actions = document.getElementById('fbSyncActions');
-  const dot     = document.getElementById('fbDot');
-  if (!form || !locked || !actions) return;
-
-  const hide = (...els) => els.forEach(e => { if (e) e.style.display = 'none'; });
-  const show = (...els) => els.forEach(e => { if (e) e.style.display = '';     });
-
-  if (!stored) {
-    show(form); hide(locked, actions);
-    if (dot) dot.className = 'fb-dot';
-  } else if (_fbDb) {
-    hide(form, locked); show(actions);
-    if (dot) dot.className = 'fb-dot connected';
-    const msg = document.getElementById('fbStatusMsg');
-    if (msg) msg.textContent = 'Connected to ' + (_fbCfg?.projectId || '');
-  } else {
-    hide(form, actions); show(locked);
-    if (dot) dot.className = 'fb-dot error';
-    const pwdEl = document.getElementById('fbUnlockPwd');
-    if (pwdEl) { pwdEl.value = ''; pwdEl.focus(); }
-  }
-}
-
-// ── Setup (first-time connect) ───────────────────────────────────────────────
-function fbSaveConfig() {
-  const get = id => (document.getElementById(id)?.value || '').trim();
-  const errEl = document.getElementById('fbSetupError');
-  const showErr = msg => { if (errEl) { errEl.textContent = msg; errEl.style.display = ''; } };
-  if (errEl) errEl.style.display = 'none';
-
-  const cfg = {
-    apiKey:         get('fbApiKey'),
-    projectId:      get('fbProjectId'),
-    collectionName: get('fbCollection') || 'haliniq',
-    docId:          get('fbDocId')      || 'data',
-    autoSync:       !!document.getElementById('fbAutoSync')?.checked,
-  };
-  if (!cfg.apiKey || !cfg.projectId) { showErr('API Key and Project ID are required.'); return; }
-
-  const pwd  = document.getElementById('fbPassword')?.value  || '';
-  const pwd2 = document.getElementById('fbPasswordConfirm')?.value || '';
-  if (!pwd)        { showErr('Master password is required.'); return; }
-  if (pwd !== pwd2) { showErr('Passwords do not match.'); return; }
-
-  _encryptCfg(cfg, pwd).then(blob => {
-    localStorage.setItem(FB_CFG_KEY, JSON.stringify(blob));
-    return fbInit(cfg);
-  }).then(ok => {
-    if (ok) { showToast('Firebase connected ✓'); renderFbCard(); }
-    else     showToast('Firebase init failed — check credentials');
-  }).catch(e => showErr('Encryption error: ' + e.message));
-}
-
-// ── Unlock (subsequent sessions) ────────────────────────────────────────────
-async function fbUnlock() {
-  const stored = _fbGetStored();
-  const errEl  = document.getElementById('fbUnlockError');
-  const pwdEl  = document.getElementById('fbUnlockPwd');
-  if (!stored || !pwdEl) return;
-  if (errEl) errEl.style.display = 'none';
-  const pwd = pwdEl.value;
-  if (!pwd) { if (errEl) { errEl.textContent = 'Enter your master password.'; errEl.style.display = ''; } return; }
+async function sbCheckSession() {
+  if (!_sbClient) return null;
   try {
-    const cfg = await _decryptCfg(stored, pwd);
-    const ok  = await fbInit(cfg);
-    if (ok) { showToast('Firebase unlocked ✓'); renderFbCard(); }
-    else     showToast('Firebase init failed — check credentials');
-  } catch(e) {
-    if (errEl) { errEl.textContent = 'Wrong password or corrupted data.'; errEl.style.display = ''; }
-    if (pwdEl) { pwdEl.value = ''; pwdEl.focus(); }
-  }
+    const { data: { session } } = await _sbClient.auth.getSession();
+    _sbUser = session?.user ?? null;
+  } catch(e) { _sbUser = null; }
+  return _sbUser;
 }
 
-function fbSkipUnlock() {
-  _fbCfg = null; _fbDb = null;
-  showToast('Firebase sync disabled for this session');
+async function sbLogin(email, password) {
+  if (!_sbClient) return { error: { message: 'Supabase not configured' } };
+  const { data, error } = await _sbClient.auth.signInWithPassword({ email, password });
+  if (!error) _sbUser = data.user;
+  return { data, error };
 }
 
-// ── Disconnect ───────────────────────────────────────────────────────────────
-function fbDisconnect() {
-  showConfirm('Remove Firebase config?', 'Encrypted credentials will be deleted. Your local data is kept. You will need to re-enter credentials to reconnect.', async () => {
-    localStorage.removeItem(FB_CFG_KEY);
-    _fbCfg = null; _fbDb = null;
-    if (_fbApp) { try { await _fbApp.delete(); } catch(e) {} _fbApp = null; }
-    renderFbCard();
-    showToast('Firebase config removed');
+async function sbLogout() {
+  if (_sbClient) await _sbClient.auth.signOut().catch(() => {});
+  _sbUser = null;
+}
+
+// ── Status helper ────────────────────────────────────────────────────────────
+function setSbStatus(st, msg) {
+  const cls = st === 'connected' ? ' connected' : st === 'error' ? ' error' : st === 'syncing' ? ' syncing' : '';
+  ['sbDot','sbDotInline'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.className = 'fb-dot' + cls;
   });
+  const msgEl = document.getElementById('sbStatusMsg');
+  if (msgEl && msg) msgEl.textContent = msg;
 }
 
 // ── Push / Pull ──────────────────────────────────────────────────────────────
-async function fbPushData(silent = false) {
-  const ref = fbRef();
-  if (!ref) { if (!silent) showToast('Firebase not unlocked'); return; }
-  const dotInline = document.getElementById('fbDotInline');
-  if (dotInline) dotInline.className = 'fb-dot syncing';
+async function sbPushAll(silent = false) {
+  if (!_sbClient || !_sbUser) { if (!silent) showToast('Not logged in to Supabase'); return; }
+  setSbStatus('syncing', 'Pushing…');
   try {
-    await ref.set({
-      version:      1,
-      syncedAt:     new Date().toISOString(),
-      transactions: state.transactions,
-      settings:     state.settings,
-      tallyState:   tallyState,
-    });
+    // Full sync: delete all user rows then upsert current state
+    await _sbClient.from('transactions').delete().eq('user_id', _sbUser.id);
+    if (state.transactions.length) {
+      const rows = state.transactions.map(t => ({
+        id:          String(t.id),
+        user_id:     _sbUser.id,
+        ts:          t.ts,
+        type:        t.type,
+        amount:      t.amount,
+        earn:        t.earn,
+        fee_in_cash: t.feeInCash,
+        notes:       t.notes || '',
+        coh_after:   t.cohAfter || 0,
+        cog_after:   t.cogAfter || 0,
+      }));
+      const { error } = await _sbClient.from('transactions').insert(rows);
+      if (error) throw error;
+    }
+    await sbPushSettings();
+    await sbPushTally();
     localStorage.setItem('gcash_last_backup', new Date().toISOString());
-    if (!silent) showToast(`Pushed to Firebase ✓ (${state.transactions.length} txns)`);
-    renderBackupMeta();
-    updateBackupDot();
-    if (dotInline) dotInline.className = 'fb-dot connected';
-    const msg = document.getElementById('fbStatusMsg');
-    if (msg) msg.textContent = 'Last push: ' + new Date().toLocaleTimeString('en-PH', { hour:'2-digit', minute:'2-digit' });
+    if (!silent) showToast(`Pushed ${state.transactions.length} transactions to Supabase ✓`);
+    renderBackupMeta(); updateBackupDot();
+    setSbStatus('connected', 'Last push: ' + new Date().toLocaleTimeString('en-PH', { hour:'2-digit', minute:'2-digit' }));
   } catch(e) {
-    console.warn('[HalinIQ] Firebase push error', e);
+    console.warn('[HalinIQ] sbPushAll error', e);
     if (!silent) showToast('Push failed: ' + e.message);
-    if (dotInline) dotInline.className = 'fb-dot error';
+    setSbStatus('error');
   }
 }
 
-async function fbPullData() {
-  const ref = fbRef();
-  if (!ref) { showToast('Firebase not unlocked'); return; }
+async function sbPushSettings() {
+  if (!_sbClient || !_sbUser) return;
+  await _sbClient.from('settings').upsert({
+    user_id:  _sbUser.id,
+    open_coh: state.settings.openCOH,
+    open_cog: state.settings.openCOG,
+    capital:  state.settings.capital,
+  }).catch(e => console.warn('[HalinIQ] sbPushSettings error', e));
+}
+
+async function sbPushTally() {
+  if (!_sbClient || !_sbUser) return;
+  await _sbClient.from('tally_state').upsert({
+    user_id: _sbUser.id,
+    denoms:  tallyState.denoms,
+    gcash:   tallyState.gcash,
+  }).catch(e => console.warn('[HalinIQ] sbPushTally error', e));
+}
+
+async function sbPull() {
+  if (!_sbClient || !_sbUser) { showToast('Not logged in to Supabase'); return; }
+  setSbStatus('syncing', 'Pulling…');
   try {
-    const snap = await ref.get();
-    if (!snap.exists) { showToast('No data found in Firebase'); return; }
-    const data = snap.data();
-    if (!Array.isArray(data.transactions)) { showToast('Invalid Firebase data'); return; }
-    const ts = data.syncedAt ? new Date(data.syncedAt).toLocaleString('en-PH') : 'unknown';
+    const [txnsRes, settingsRes, tallyRes] = await Promise.all([
+      _sbClient.from('transactions').select('*').eq('user_id', _sbUser.id).order('ts', { ascending: true }),
+      _sbClient.from('settings').select('*').eq('user_id', _sbUser.id).maybeSingle(),
+      _sbClient.from('tally_state').select('*').eq('user_id', _sbUser.id).maybeSingle(),
+    ]);
+
+    const txns = (txnsRes.data || []).map(r => ({
+      id:       r.id,
+      ts:       r.ts,
+      type:     r.type,
+      amount:   r.amount,
+      earn:     r.earn,
+      feeInCash: r.fee_in_cash,
+      notes:    r.notes,
+      cohAfter: r.coh_after,
+      cogAfter: r.cog_after,
+    }));
+
     showConfirm(
-      'Pull from Firebase?',
-      `Replace local data with ${data.transactions.length} transactions from Firebase (synced ${ts})?`,
+      'Pull from Supabase?',
+      `Replace local data with ${txns.length} transaction(s) from Supabase?`,
       async () => {
-        state.transactions = data.transactions;
-        if (data.settings)   Object.assign(state.settings,  data.settings);
-        if (data.tallyState) Object.assign(tallyState,      data.tallyState);
+        state.transactions = txns;
+        if (settingsRes.data) {
+          state.settings.openCOH = settingsRes.data.open_coh;
+          state.settings.openCOG = settingsRes.data.open_cog;
+          state.settings.capital  = settingsRes.data.capital;
+        }
+        if (tallyRes.data) {
+          if (tallyRes.data.denoms) Object.assign(tallyState.denoms, tallyRes.data.denoms);
+          if (tallyRes.data.gcash)  tallyState.gcash = tallyRes.data.gcash;
+        }
+        recalcCohAfter();
         await saveAllTxns();
         await saveSettingsToIDB();
-        saveTallyState();
-        recalcCohAfter();
-        render();
-        renderTally();
-        showToast(`Pulled ${state.transactions.length} transactions from Firebase ✓`);
-        const msg = document.getElementById('fbStatusMsg');
-        if (msg) msg.textContent = 'Last pull: ' + new Date().toLocaleTimeString('en-PH', { hour:'2-digit', minute:'2-digit' });
+        idbPut('tally', { id: 'main', ...tallyState }).catch(() => {});
+        render(); renderTally();
+        localStorage.setItem('gcash_last_backup', new Date().toISOString());
+        renderBackupMeta(); updateBackupDot();
+        showToast(`Pulled ${txns.length} transaction(s) from Supabase ✓`);
+        setSbStatus('connected', 'Last pull: ' + new Date().toLocaleTimeString('en-PH', { hour:'2-digit', minute:'2-digit' }));
       }
     );
   } catch(e) {
-    console.warn('[HalinIQ] Firebase pull error', e);
+    console.warn('[HalinIQ] sbPull error', e);
     showToast('Pull failed: ' + e.message);
+    setSbStatus('error');
   }
 }
 
-// ── Auto-sync ────────────────────────────────────────────────────────────────
-function fbScheduleAutoSync() {
-  if (!_fbCfg?.autoSync || !_fbDb) return;
-  clearTimeout(_fbSyncTimer);
-  _fbSyncTimer = setTimeout(() => fbPushData(true), 4000);
+function sbScheduleSync() {
+  if (!_sbClient || !_sbUser) return;
+  clearTimeout(_sbSyncTimer);
+  _sbSyncTimer = setTimeout(() => sbPushAll(true), 4000);
+}
+
+// ── Card renderer ─────────────────────────────────────────────────────────────
+function renderSbCard() {
+  const form     = document.getElementById('sbConfigForm');
+  const loggedIn = document.getElementById('sbLoggedIn');
+  if (!form || !loggedIn) return;
+
+  // Pre-fill stored URL/anon key
+  const url  = localStorage.getItem(SB_URL_KEY)  || '';
+  const anon = localStorage.getItem(SB_ANON_KEY) || '';
+  const urlEl  = document.getElementById('sbUrl');
+  const anonEl = document.getElementById('sbAnon');
+  if (urlEl  && !urlEl.value)  urlEl.value  = url;
+  if (anonEl && !anonEl.value) anonEl.value = anon;
+
+  if (_sbUser) {
+    form.style.display = 'none'; loggedIn.style.display = '';
+    setSbStatus('connected', 'Connected');
+    const emailEl = document.getElementById('sbUserEmail');
+    if (emailEl) emailEl.textContent = _sbUser.email;
+  } else {
+    form.style.display = ''; loggedIn.style.display = 'none';
+    setSbStatus(_sbClient ? '' : 'error');
+  }
+}
+
+// ── Auth actions ─────────────────────────────────────────────────────────────
+async function sbSaveConfigAndLogin() {
+  const get    = id => (document.getElementById(id)?.value || '').trim();
+  const errEl  = document.getElementById('sbSetupError');
+  const showErr = msg => { if (errEl) { errEl.textContent = msg; errEl.style.display = ''; } };
+  if (errEl) errEl.style.display = 'none';
+
+  const url   = get('sbUrl');
+  const anon  = get('sbAnon');
+  const email = get('sbEmail');
+  const pwd   = get('sbPwd');
+
+  if (!url || !anon) { showErr('Supabase URL and Anon Key are required.'); return; }
+  if (!email || !pwd) { showErr('Email and password are required.'); return; }
+
+  localStorage.setItem(SB_URL_KEY, url);
+  localStorage.setItem(SB_ANON_KEY, anon);
+  if (!sbInit()) { showErr('Failed to initialize Supabase client. Check the URL and Anon Key.'); return; }
+
+  const { error } = await sbLogin(email, pwd);
+  if (error) { showErr('Login failed: ' + error.message); return; }
+
+  showToast('Logged in to Supabase ✓');
+  renderSbCard();
+}
+
+async function sbDoLogout() {
+  showConfirm('Log out of Supabase?', 'Your local data is kept. Supabase sync will stop for this session.', async () => {
+    await sbLogout();
+    renderSbCard();
+    showToast('Logged out of Supabase');
+  });
 }
 
 // ── INIT ───────────────────────────────────────────────────────────────────
@@ -3572,7 +3587,10 @@ async function init() {
   setupStickyDate();
   setupPullToRefresh();
   setupPWAIcons();
-  setTimeout(() => { renderTally(); renderHomeChart(); renderFbCard(); }, 0);
+  // Restore Supabase session if credentials were saved previously
+  sbInit();
+  await sbCheckSession();
+  setTimeout(() => { renderTally(); renderHomeChart(); renderSbCard(); }, 0);
 }
 init();
 </script>
