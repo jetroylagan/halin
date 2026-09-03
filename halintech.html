@@ -807,6 +807,9 @@
           <div id="sbSetupError" style="display:none;color:var(--red);font-size:12px;margin-bottom:10px;"></div>
           <div style="background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.25);border-radius:var(--radius-sm);padding:10px 12px;margin-bottom:12px;font-size:11px;color:var(--teal);line-height:1.6;">
             Your URL and anon key are stored locally. The anon key is safe — Row Level Security restricts access to your own data only.
+            <hr style="border:none;border-top:1px solid rgba(52,211,153,.2);margin:8px 0 6px;">
+            <span style="color:var(--muted);">Add this to Supabase → Authentication → URL Configuration → Redirect URLs:</span><br>
+            <span id="sbRedirectUrlHint" style="color:var(--text);word-break:break-all;font-family:var(--mono);font-size:10px;user-select:all;"></span>
           </div>
           <button class="btn" onclick="sbSignInWithGoogle()" style="background:#fff;color:#3c4043;border:1.5px solid #dadce0;display:flex;align-items:center;justify-content:center;gap:10px;font-size:15px;font-weight:600;">
             <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.08 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.93 2.31-8.16 2.31-6.26 0-11.57-3.59-13.46-8.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></svg>
@@ -3380,6 +3383,19 @@ async function sbCheckSession() {
     _sbUser = session?.user ?? null;
   } catch(e) { _sbUser = null; }
 
+  // Check for OAuth error params returned in the URL hash after a failed redirect
+  try {
+    const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ''));
+    const oauthErr = hashParams.get('error_description') || hashParams.get('error');
+    if (oauthErr && !_sbUser) {
+      const errEl = document.getElementById('sbSetupError');
+      const decoded = decodeURIComponent(oauthErr.replace(/\+/g, ' '));
+      if (errEl) { errEl.textContent = 'OAuth error: ' + decoded; errEl.style.display = ''; }
+      // Remove the hash from the URL so the error doesn't persist on reload
+      window.history.replaceState({}, '', window.location.pathname + window.location.search);
+    }
+  } catch(e) {}
+
   // Listen for OAuth redirect callback and future sign-in/out events
   _sbClient.auth.onAuthStateChange(async (event, session) => {
     _sbUser = session?.user ?? null;
@@ -3394,8 +3410,13 @@ async function sbCheckSession() {
 
 async function sbSignInWithGoogle() {
   const errEl  = document.getElementById('sbSetupError');
-  const showErr = msg => { if (errEl) { errEl.textContent = msg; errEl.style.display = ''; } };
+  const showErr = msg => { if (errEl) { errEl.innerHTML = msg; errEl.style.display = ''; } };
   if (errEl) errEl.style.display = 'none';
+
+  if (window.location.protocol === 'file:') {
+    showErr('Google OAuth does not work with <code>file://</code> URLs. Open this app from a web server (GitHub Pages, Netlify, etc.) and try again.');
+    return;
+  }
 
   const url  = (document.getElementById('sbUrl')?.value  || '').trim() || localStorage.getItem(SB_URL_KEY)  || '';
   const anon = (document.getElementById('sbAnon')?.value || '').trim() || localStorage.getItem(SB_ANON_KEY) || '';
@@ -3556,6 +3577,8 @@ function renderSbCard() {
   const anonEl = document.getElementById('sbAnon');
   if (urlEl  && !urlEl.value)  urlEl.value  = url;
   if (anonEl && !anonEl.value) anonEl.value = anon;
+  const hintEl = document.getElementById('sbRedirectUrlHint');
+  if (hintEl) hintEl.textContent = window.location.href.split('?')[0].split('#')[0];
 
   if (_sbUser) {
     form.style.display = 'none'; loggedIn.style.display = '';
