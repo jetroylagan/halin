@@ -1059,7 +1059,7 @@
 
         <!-- Config form (shown when not logged in) -->
         <div id="sbConfigForm" style="padding:14px 16px;">
-          <p style="font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.5;">Connect to Supabase to back up your data online.</p>
+          <p style="font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.5;">Connect to cloud storage to back up your data online.</p>
           <div class="field"><label>Server Address</label><input type="text" id="sbUrl" placeholder="https://xxxx.supabase.co" autocomplete="off" style="font-size:13px;"></div>
           <div class="field"><label>Access Key</label><input type="text" id="sbAnon" placeholder="eyJh…" autocomplete="off" style="font-size:13px;"></div>
           <hr class="divider">
@@ -1195,15 +1195,20 @@
       <div class="card" style="text-align:center;margin-bottom:12px;">
         <div style="display:flex;justify-content:center;margin-bottom:10px;">
           <svg width="64" height="64" viewBox="0 0 64 64" aria-hidden="true">
-            <rect width="64" height="64" rx="18" fill="#0F172A"/>
-            <ellipse cx="24" cy="32" rx="13" ry="13" fill="none" stroke="#818CF8" stroke-width="4"/>
-            <ellipse cx="40" cy="32" rx="13" ry="13" fill="none" stroke="#34D399" stroke-width="4"/>
-            <text x="32" y="37" font-size="16" font-weight="700" fill="#FBBF24" font-family="system-ui" text-anchor="middle">₱</text>
-            <rect x="40" y="49" width="20" height="11" rx="4" fill="#34D399"/>
-            <text x="50" y="58" font-size="7" font-weight="700" fill="#022C22" font-family="system-ui" text-anchor="middle">IQ</text>
+            <defs>
+              <linearGradient id="abg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#3730A3"/>
+                <stop offset=".5" stop-color="#6366F1"/>
+                <stop offset="1" stop-color="#8B5CF6"/>
+              </linearGradient>
+            </defs>
+            <rect width="64" height="64" rx="18" fill="url(#abg)"/>
+            <ellipse cx="23" cy="32" rx="14" ry="14" fill="none" stroke="#A5B4FC" stroke-width="4"/>
+            <ellipse cx="41" cy="32" rx="14" ry="14" fill="none" stroke="#2DD4BF" stroke-width="4"/>
+            <text x="32" y="38" font-size="18" font-weight="700" fill="#F59E0B" font-family="system-ui" text-anchor="middle">₱</text>
           </svg>
         </div>
-        <div style="font-size:14px;font-weight:800;color:var(--text);">HalinIQ</div>
+        <div style="font-size:14px;font-weight:800;color:var(--text);">Halin-TecQ</div>
         <div style="font-size:11px;color:var(--muted);margin-top:4px;">Version 3.0</div>
       </div>
 
@@ -1278,7 +1283,7 @@
   <div id="tabs">
     <div class="nav-inner">
       <button type="button" class="tab active" onclick="switchTab('home')"     id="tab-home"><span class="tab-icon"><i class="ti ti-home" aria-hidden="true"></i></span>Home</button>
-      <button type="button" class="tab"        onclick="switchTab('log')"      id="tab-log"><span class="tab-icon"><i class="ti ti-list-details" aria-hidden="true"></i></span>Log</button>
+      <button type="button" class="tab"        onclick="switchTab('log')"      id="tab-log"><span class="tab-icon"><i class="ti ti-list-details" aria-hidden="true"></i></span>Logs</button>
       <button type="button" class="tab"        onclick="switchTab('reports')"  id="tab-reports"><span class="tab-icon"><i class="ti ti-chart-bar" aria-hidden="true"></i></span>Reports</button>
       <button type="button" class="tab"        onclick="switchTab('tally')"    id="tab-tally"><span class="tab-icon"><i class="ti ti-calculator" aria-hidden="true"></i></span>Tally</button>
       <button type="button" class="tab"        onclick="switchTab('settings')" id="tab-settings"><span class="tab-icon"><i class="ti ti-settings" aria-hidden="true"></i></span>More</button>
@@ -1484,12 +1489,12 @@ function saveAllTxns() {
     tx.onerror    = e => reject(e.target.error);
   })).then(() => {
     sbScheduleSync();
-  }).catch(e => console.warn('[HalinIQ] saveAllTxns failed', e));
+  }).catch(e => console.warn('[Halin-TecQ] saveAllTxns failed', e));
 }
 
 function saveSettingsToIDB() {
   return idbPut('settings', { id: 'main', ...state.settings })
-    .catch(e => console.warn('[HalinIQ] saveSettings failed', e));
+    .catch(e => console.warn('[Halin-TecQ] saveSettings failed', e));
 }
 
 // One-time migration: moves existing localStorage data into IDB on first run.
@@ -1507,8 +1512,8 @@ async function migrateFromLocalStorage() {
     if (rawTally) { Object.assign(tallyState, JSON.parse(rawTally)); saveTallyState(); }
     localStorage.removeItem('gcash_tracker_v2');
     localStorage.removeItem('gcash_tally_v1');
-    console.log('[HalinIQ] Migrated', state.transactions.length, 'transactions to IndexedDB');
-  } catch(e) { console.warn('[HalinIQ] Migration skipped — localStorage preserved', e); }
+    console.log('[Halin-TecQ] Migrated', state.transactions.length, 'transactions to IndexedDB');
+  } catch(e) { console.warn('[Halin-TecQ] Migration skipped — localStorage preserved', e); }
 }
 
 // Loads all persisted data at boot. Falls back to migration on first run.
@@ -2364,7 +2369,7 @@ function confirmReset() {
     tallyState.denoms.uncollected = 0;
     tallyState.gcash = [{ name:'Wifey', amount:0 }, { name:'Me', amount:0 }];
     saveTallyState();
-    Promise.all([idbClear('transactions'), saveSettingsToIDB()]).catch(e => console.warn('[HalinIQ] Reset IDB clear failed', e));
+    Promise.all([idbClear('transactions'), saveSettingsToIDB()]).catch(e => console.warn('[Halin-TecQ] Reset IDB clear failed', e));
     render(); showToast('Data reset');
   });
 }
@@ -2748,7 +2753,7 @@ function loadTallyState() {
 }
 
 function saveTallyState() {
-  idbPut('tally', { id: 'main', ...tallyState }).catch(e => console.warn('[HalinIQ] saveTally failed', e));
+  idbPut('tally', { id: 'main', ...tallyState }).catch(e => console.warn('[Halin-TecQ] saveTally failed', e));
   sbPushTally();
 }
 
@@ -3403,7 +3408,7 @@ function exportXLSX() {
   // ── Summary sheet ──
   const bal = calcBalances();
   const summaryData = [
-    ['HalinIQ Export', new Date().toLocaleDateString('en-PH')],
+    ['Halin-TecQ Export', new Date().toLocaleDateString('en-PH')],
     [],
     ['Opening COH', state.settings.openCOH],
     ['Opening GCash', state.settings.openCOG],
@@ -3635,7 +3640,7 @@ function setupPWAIcons() {
     if (appleLink) appleLink.href = icon180;
 
     const manifest = {
-      name: 'HalinIQ', short_name: 'HalinIQ', start_url: '.', display: 'standalone',
+      name: 'Halin-TecQ', short_name: 'Halin-TecQ', start_url: '.', display: 'standalone',
       background_color: '#07080F', theme_color: '#07080F',
       icons: [
         { src: icon192, sizes: '192x192', type: 'image/png', purpose: 'any maskable' },
@@ -3664,7 +3669,7 @@ function sbInit() {
     _sbClient = supabase.createClient(url, anon);
     return true;
   } catch(e) {
-    console.warn('[HalinIQ] Supabase init error', e);
+    console.warn('[Halin-Tecq] Cloud storage init error', e);
     return false;
   }
 }
@@ -3765,7 +3770,7 @@ function setSbStatus(st, msg) {
 
 // ── Push / Pull ──────────────────────────────────────────────────────────────
 async function sbPushAll(silent = false) {
-  if (!_sbClient || !_sbUser) { if (!silent) showToast('Not logged in to Supabase'); return; }
+  if (!_sbClient || !_sbUser) { if (!silent) showToast('Not logged in to cloud storage.'); return; }
   setSbStatus('syncing', 'Pushing…');
   try {
     // Full sync: delete all user rows then upsert current state
@@ -3792,14 +3797,14 @@ async function sbPushAll(silent = false) {
     await sbPushSettings();
     await sbPushTally();
     localStorage.setItem('gcash_last_backup', new Date().toISOString());
-    if (!silent) showToast(`Pushed ${state.transactions.length} transactions to Supabase ✓`);
+    if (!silent) showToast(`Pushed ${state.transactions.length} transactions to cloud storage ✓`);
     renderBackupMeta(); updateBackupDot();
     setSbStatus('connected', 'Last push: ' + new Date().toLocaleTimeString('en-PH', { hour:'2-digit', minute:'2-digit' }));
   } catch(e) {
     const step = e._step ? ` (${e._step})` : '';
     const msg = e.message || e.msg || JSON.stringify(e);
-    console.warn('[HalinIQ] sbPushAll error', e);
-    if (!silent) showToast(`Push failed${step}: ${msg}`);
+    console.warn('[Halin-TecQ] sbPushAll error', e);
+    if (!silent) showToast(`Push to cloud storage failed${step}: ${msg}`);
     setSbStatus('error');
   }
 }
@@ -3826,7 +3831,7 @@ async function sbPushTally() {
 }
 
 async function sbPull() {
-  if (!_sbClient || !_sbUser) { showToast('Not logged in to Supabase'); return; }
+  if (!_sbClient || !_sbUser) { showToast('Not logged in to cloud storage.'); return; }
   setSbStatus('syncing', 'Pulling…');
   try {
     // Paginate transactions in batches of 1000 (Supabase PostgREST hard cap per request)
@@ -3860,8 +3865,8 @@ async function sbPull() {
     }));
 
     showConfirm(
-      'Pull from Supabase?',
-      `Replace local data with ${txns.length} transaction(s) from Supabase?`,
+      'Pull from cloud storage?',
+      `Replace local data with ${txns.length} transaction(s) from cloud storage?`,
       async () => {
         state.transactions = txns;
         if (settingsRes.data) {
@@ -3880,12 +3885,12 @@ async function sbPull() {
         render(); renderTally();
         localStorage.setItem('gcash_last_backup', new Date().toISOString());
         renderBackupMeta(); updateBackupDot();
-        showToast(`Pulled ${txns.length} transaction(s) from Supabase ✓`);
+        showToast(`Pulled ${txns.length} transaction(s) from cloud storage. ✓`);
         setSbStatus('connected', 'Last pull: ' + new Date().toLocaleTimeString('en-PH', { hour:'2-digit', minute:'2-digit' }));
       }
     );
   } catch(e) {
-    console.warn('[HalinIQ] sbPull error', e);
+    console.warn('[Halin-TecQ] sbPull error', e);
     showToast('Pull failed: ' + e.message);
     setSbStatus('error');
   }
@@ -3925,10 +3930,10 @@ function renderSbCard() {
 // ── Auth actions ─────────────────────────────────────────────────────────────
 
 async function sbDoLogout() {
-  showConfirm('Log out of Supabase?', 'Your local data is kept. Supabase sync will stop for this session.', async () => {
+  showConfirm('Log out of cloud storage?', 'Your local data is kept. Cloud storage sync will stop for this session.', async () => {
     await sbLogout();
     renderSbCard();
-    showToast('Logged out of Supabase');
+    showToast('Logged out of cloud storage');
   });
 }
 
