@@ -73,46 +73,27 @@
     --glass-header:rgba(6,8,17,.88); --glass-tabs:rgba(6,8,17,.92); --glass-sticky:rgba(6,8,17,.85);
     --shadow-tabs:0 -4px 24px rgba(0,0,0,.5);
   }
-  [data-theme="obsidian"] {
-    --bg:#0A0A0A; --surface:#141414; --surface2:#1C1C1C; --surface3:#242424; --surface4:#2C2C2C;
-    --s1:#141414; --s2:#1C1C1C; --s3:#242424; --s4:#2C2C2C;
-    --border:rgba(255,255,255,.07); --border2:rgba(255,255,255,.12);
-    --text:#F0F0F0; --text2:#A0A0A0; --muted:#686868;
-    --glass-header:rgba(10,10,10,.9); --glass-tabs:rgba(10,10,10,.94); --glass-sticky:rgba(10,10,10,.86);
-    --shadow-tabs:0 -4px 24px rgba(0,0,0,.6);
+  [data-theme="pearl"] {
+    --bg:#FAFBFF; --surface:#F0F2FA; --surface2:#E8EBF5; --surface3:#DDE0EE; --surface4:#D0D4E8;
+    --s1:#F0F2FA; --s2:#E8EBF5; --s3:#DDE0EE; --s4:#D0D4E8;
+    --border:rgba(0,0,0,.08); --border2:rgba(0,0,0,.13);
+    --text:#1A1D36; --text2:#5C6080; --muted:#9398B0;
+    --glass-header:rgba(250,251,255,.92); --glass-tabs:rgba(250,251,255,.95); --glass-sticky:rgba(250,251,255,.90);
+    --shadow-tabs:0 -4px 24px rgba(0,0,0,.08);
   }
-  [data-theme="slate"] {
-    --bg:#111825; --surface:#181F30; --surface2:#1E2840; --surface3:#263050; --surface4:#2E3860;
-    --s1:#181F30; --s2:#1E2840; --s3:#263050; --s4:#2E3860;
-    --border:rgba(255,255,255,.07); --border2:rgba(255,255,255,.12);
-    --text:#E0E4F8; --text2:#8C98C8; --muted:#60709A;
-    --glass-header:rgba(17,24,37,.9); --glass-tabs:rgba(17,24,37,.94); --glass-sticky:rgba(17,24,37,.86);
-    --shadow-tabs:0 -4px 24px rgba(0,0,0,.45);
-  }
-  [data-theme="ocean"] {
-    --bg:#040C18; --surface:#08142A; --surface2:#0C1C3A; --surface3:#12264C; --surface4:#182E5E;
-    --s1:#08142A; --s2:#0C1C3A; --s3:#12264C; --s4:#182E5E;
-    --border:rgba(255,255,255,.07); --border2:rgba(255,255,255,.12);
-    --text:#E0EDFF; --text2:#7FA8D8; --muted:#4A6890;
-    --glass-header:rgba(4,12,24,.9); --glass-tabs:rgba(4,12,24,.94); --glass-sticky:rgba(4,12,24,.86);
-    --shadow-tabs:0 -4px 24px rgba(0,0,0,.55);
-  }
-  [data-theme="forest"] {
-    --bg:#061210; --surface:#0C1C18; --surface2:#102420; --surface3:#162E28; --surface4:#1C3830;
-    --s1:#0C1C18; --s2:#102420; --s3:#162E28; --s4:#1C3830;
-    --border:rgba(255,255,255,.07); --border2:rgba(255,255,255,.12);
-    --text:#D8F0E8; --text2:#7DC4A4; --muted:#4E8068;
-    --glass-header:rgba(6,18,16,.9); --glass-tabs:rgba(6,18,16,.94); --glass-sticky:rgba(6,18,16,.86);
-    --shadow-tabs:0 -4px 24px rgba(0,0,0,.5);
-  }
-  [data-theme="violet"] {
-    --bg:#0B0918; --surface:#130E24; --surface2:#1A1332; --surface3:#221A42; --surface4:#2B2254;
-    --s1:#130E24; --s2:#1A1332; --s3:#221A42; --s4:#2B2254;
-    --border:rgba(255,255,255,.07); --border2:rgba(255,255,255,.12);
-    --text:#ECE6FF; --text2:#A898D8; --muted:#7060A0;
-    --glass-header:rgba(11,9,24,.9); --glass-tabs:rgba(11,9,24,.94); --glass-sticky:rgba(11,9,24,.86);
-    --shadow-tabs:0 -4px 24px rgba(0,0,0,.55);
-  }
+  /* Pearl light-mode overrides for hardcoded dark values */
+  [data-theme="pearl"] .pod.coh { background:linear-gradient(135deg,#EFF1FA 0%,#E8EAF5 100%); border-color:#C8CCEE; }
+  [data-theme="pearl"] .pod.cog { background:linear-gradient(135deg,#EEF8F5 0%,#E2F4EF 100%); border-color:#B4E4D8; }
+  [data-theme="pearl"] .pod.grand { background:linear-gradient(135deg,#EBF7EE 0%,#DFF4E6 100%); border-color:#B0E4C4; }
+  [data-theme="pearl"] .pod.coh .pod-label { color:#6366F1; }
+  [data-theme="pearl"] .pod.cog .pod-label { color:#0D9488; }
+  [data-theme="pearl"] .deficit-item { background:rgba(0,0,0,.04); border-color:rgba(0,0,0,.09); }
+  [data-theme="pearl"] .qe-card { background:rgba(240,242,250,.92); }
+  [data-theme="pearl"] .tally-mini-pod.coh { background:linear-gradient(135deg,#FEFAED,#FDF5D6); border-color:rgba(245,158,11,.3); }
+  [data-theme="pearl"] .tally-mini-pod.cog { background:linear-gradient(135deg,#EEF9F7,#E2F5F0); border-color:rgba(45,212,191,.3); }
+  [data-theme="pearl"] #app::before { background:radial-gradient(ellipse 70% 45% at 15% 0%,rgba(99,102,241,.06) 0%,transparent 65%),radial-gradient(ellipse 55% 40% at 85% 100%,rgba(45,212,191,.05) 0%,transparent 60%); }
+  [data-theme="pearl"] input[type=date]::-webkit-calendar-picker-indicator { filter:none; opacity:.5; }
+  [data-theme="pearl"] .modal-bg { background:rgba(60,65,120,.4); }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   html, body { height: 100%; background: var(--bg); color: var(--text); font-family: var(--font); font-size: 15px; overscroll-behavior: none; font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased; }
@@ -160,6 +141,13 @@
   }
   .btn-new:active { opacity: .85; transform: scale(.96); }
   .btn-new i { font-size: 15px; }
+  .btn-theme-toggle {
+    width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid var(--border2);
+    background: var(--surface2); color: var(--text2); cursor: pointer;
+    display: flex; align-items: center; justify-content: center; font-size: 18px;
+    flex-shrink: 0; transition: all .2s; margin-right: 6px;
+  }
+  .btn-theme-toggle:active { transform: scale(.9); opacity: .8; }
 
   /* ── BALANCE HERO ── */
   .balance-hero {
@@ -777,7 +765,7 @@
 
   /* ── ROW BUTTON (Settings) ── */
   /* Settings – theme chips */
-  .theme-row { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; }
+  .theme-row { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
   .theme-chip { display:flex; flex-direction:column; align-items:center; gap:8px; background:var(--s2); border:1.5px solid var(--border2); border-radius:var(--r-sm); padding:10px 12px; cursor:pointer; transition:border-color .15s; -webkit-tap-highlight-color:transparent; }
   .theme-chip.active { border-color:var(--indigo); }
   .theme-swatches { display:flex; gap:3px; }
@@ -829,7 +817,8 @@
         <div class="hdr-name">Halin-TecQ</div>
         <div class="hdr-date" id="headerDate"></div>
       </div>
-      <div style="margin-left:auto;">
+      <div style="margin-left:auto;display:flex;align-items:center;">
+        <button class="btn-theme-toggle" id="btnThemeToggle" onclick="toggleTheme()" title="Toggle light/dark"></button>
         <button class="btn-new" onclick="openAddModal()">
           <i class="ti ti-plus"></i> New
         </button>
@@ -1108,39 +1097,6 @@
           <div class="field"><label>Cash on Hand (₱)</label><input type="number" id="settingOpenCOH" value="20000" inputmode="decimal" disabled></div>
           <div class="field" style="margin-bottom:0;"><label>GCash Balance (₱)</label><input type="number" id="settingOpenCOG" value="20000" inputmode="decimal" disabled></div>
           <button id="settingsSaveBtn" class="btn btn-primary" onclick="saveSettings()" style="display:none;margin-top:12px;">Save Settings</button>
-        </div>
-      </div>
-
-      <!-- Appearance -->
-      <div class="card" style="padding:0;overflow:hidden;margin-bottom:12px;">
-        <div class="card-hdr"><div class="card-hdr-title">Appearance</div></div>
-        <div class="card-pad">
-          <div class="theme-row" id="themeGrid">
-            <div class="theme-chip" data-theme="midnight" onclick="applyTheme('midnight')">
-              <div class="theme-swatches"><div class="theme-sw" style="background:#07080F;"></div><div class="theme-sw" style="background:#6366F1;"></div><div class="theme-sw" style="background:#2DD4BF;"></div></div>
-              <div class="theme-chip-name">Midnight</div>
-            </div>
-            <div class="theme-chip" data-theme="obsidian" onclick="applyTheme('obsidian')">
-              <div class="theme-swatches"><div class="theme-sw" style="background:#0A0A0A;"></div><div class="theme-sw" style="background:#6366F1;"></div><div class="theme-sw" style="background:#34D399;"></div></div>
-              <div class="theme-chip-name">Obsidian</div>
-            </div>
-            <div class="theme-chip" data-theme="slate" onclick="applyTheme('slate')">
-              <div class="theme-swatches"><div class="theme-sw" style="background:#141928;"></div><div class="theme-sw" style="background:#818CF8;"></div><div class="theme-sw" style="background:#34D399;"></div></div>
-              <div class="theme-chip-name">Slate</div>
-            </div>
-            <div class="theme-chip" data-theme="ocean" onclick="applyTheme('ocean')">
-              <div class="theme-swatches"><div class="theme-sw" style="background:#050D1A;"></div><div class="theme-sw" style="background:#60A5FA;"></div><div class="theme-sw" style="background:#34D399;"></div></div>
-              <div class="theme-chip-name">Ocean</div>
-            </div>
-            <div class="theme-chip" data-theme="forest" onclick="applyTheme('forest')">
-              <div class="theme-swatches"><div class="theme-sw" style="background:#071410;"></div><div class="theme-sw" style="background:#34D399;"></div><div class="theme-sw" style="background:#4ADE80;"></div></div>
-              <div class="theme-chip-name">Forest</div>
-            </div>
-            <div class="theme-chip" data-theme="violet" onclick="applyTheme('violet')">
-              <div class="theme-swatches"><div class="theme-sw" style="background:#0D0A1A;"></div><div class="theme-sw" style="background:#A78BFA;"></div><div class="theme-sw" style="background:#6366F1;"></div></div>
-              <div class="theme-chip-name">Violet</div>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -2309,17 +2265,34 @@ function saveSettings() {
 }
 
 // ── THEME ──────────────────────────────────────────────────────────────────
+function _syncThemeToggle(name) {
+  const btn = document.getElementById('btnThemeToggle');
+  if (!btn) return;
+  const isLight = name === 'pearl';
+  btn.innerHTML = isLight
+    ? '<i class="ti ti-moon" style="font-size:17px;"></i>'
+    : '<i class="ti ti-sun" style="font-size:17px;"></i>';
+  btn.title = isLight ? 'Switch to dark' : 'Switch to light';
+}
+
 function applyTheme(name) {
   document.documentElement.setAttribute('data-theme', name);
   localStorage.setItem('haliniq_theme', name);
   document.querySelectorAll('.theme-card,.theme-chip').forEach(c => {
     c.classList.toggle('active', c.dataset.theme === name);
   });
+  _syncThemeToggle(name);
 }
 
 function loadTheme() {
   const saved = localStorage.getItem('haliniq_theme') || 'midnight';
   document.documentElement.setAttribute('data-theme', saved);
+  _syncThemeToggle(saved);
+}
+
+function toggleTheme() {
+  const cur = document.documentElement.getAttribute('data-theme') || 'midnight';
+  applyTheme(cur === 'midnight' ? 'pearl' : 'midnight');
 }
 
 // ── NAVIGATION ─────────────────────────────────────────────────────────────
