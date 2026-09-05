@@ -73,27 +73,30 @@
     --glass-header:rgba(6,8,17,.88); --glass-tabs:rgba(6,8,17,.92); --glass-sticky:rgba(6,8,17,.85);
     --shadow-tabs:0 -4px 24px rgba(0,0,0,.5);
   }
-  [data-theme="ivory"] {
-    --bg:#FAFAF4; --surface:#F0F0E4; --surface2:#E6E6D6; --surface3:#DDDCCA; --surface4:#D2D1BC;
-    --s1:#F0F0E4; --s2:#E6E6D6; --s3:#DDDCCA; --s4:#D2D1BC;
-    --border:rgba(0,0,0,.08); --border2:rgba(0,0,0,.13);
-    --text:#1C1C10; --text2:#5A5A44; --muted:#8A8A70;
-    --glass-header:rgba(250,250,244,.92); --glass-tabs:rgba(250,250,244,.95); --glass-sticky:rgba(250,250,244,.90);
-    --shadow-tabs:0 -4px 24px rgba(0,0,0,.08);
+  [data-theme="graphite"] {
+    --bg:#E2E4E9; --surface:#D4D8E4; --surface2:#C8CCDA; --surface3:#BCBECE; --surface4:#B0B4C2;
+    --s1:#D4D8E4; --s2:#C8CCDA; --s3:#BCBECE; --s4:#B0B4C2;
+    --border:rgba(0,0,0,.10); --border2:rgba(0,0,0,.16);
+    --text:#0C0E14; --text2:#363C50; --muted:#606878;
+    --glass-header:rgba(226,228,233,.96); --glass-tabs:rgba(226,228,233,.98); --glass-sticky:rgba(226,228,233,.94);
+    --shadow-tabs:0 -4px 24px rgba(0,0,0,.12);
   }
-  /* Ivory light-mode overrides for hardcoded dark values */
-  [data-theme="ivory"] .pod.coh { background:linear-gradient(135deg,#FDF6E8 0%,#F8EED8 100%); border-color:#E0C888; }
-  [data-theme="ivory"] .pod.cog { background:linear-gradient(135deg,#EDFAF6 0%,#E2F4EE 100%); border-color:#A8DDD0; }
-  [data-theme="ivory"] .pod.grand { background:linear-gradient(135deg,#F4F4EA 0%,#EBEBDC 100%); border-color:#CCCCA8; }
-  [data-theme="ivory"] .pod.coh .pod-label { color:#D97706; }
-  [data-theme="ivory"] .pod.cog .pod-label { color:#0D9488; }
-  [data-theme="ivory"] .deficit-item { background:rgba(0,0,0,.04); border-color:rgba(0,0,0,.09); }
-  [data-theme="ivory"] .qe-card { background:rgba(240,240,228,.92); }
-  [data-theme="ivory"] .tally-mini-pod.coh { background:linear-gradient(135deg,#FEFAED,#FDF5D6); border-color:rgba(245,158,11,.3); }
-  [data-theme="ivory"] .tally-mini-pod.cog { background:linear-gradient(135deg,#EDFAF6,#E2F4EE); border-color:rgba(45,212,191,.3); }
-  [data-theme="ivory"] #app::before { background:radial-gradient(ellipse 70% 45% at 15% 0%,rgba(99,102,241,.05) 0%,transparent 65%),radial-gradient(ellipse 55% 40% at 85% 100%,rgba(245,158,11,.04) 0%,transparent 60%); }
-  [data-theme="ivory"] input[type=date]::-webkit-calendar-picker-indicator { filter:none; opacity:.5; }
-  [data-theme="ivory"] .modal-bg { background:rgba(28,28,16,.45); }
+  /* Graphite light-mode overrides for hardcoded dark values */
+  [data-theme="graphite"] .pod.coh { background:linear-gradient(135deg,#FEF5DC 0%,#FCEDC4 100%); border-color:rgba(245,158,11,.45); }
+  [data-theme="graphite"] .pod.coh::before { background:radial-gradient(circle at 85% 15%,rgba(245,158,11,.38) 0%,transparent 62%); }
+  [data-theme="graphite"] .pod.cog { background:linear-gradient(135deg,#D4F8F4 0%,#C0F2EC 100%); border-color:rgba(45,212,191,.42); }
+  [data-theme="graphite"] .pod.cog::before { background:radial-gradient(circle at 85% 15%,rgba(45,212,191,.32) 0%,transparent 62%); }
+  [data-theme="graphite"] .pod.grand { background:linear-gradient(135deg,#D4F4E0 0%,#C0EED0 100%); border-color:rgba(74,222,128,.40); }
+  [data-theme="graphite"] .pod.grand::before { background:radial-gradient(circle at 85% 15%,rgba(74,222,128,.28) 0%,transparent 62%); }
+  [data-theme="graphite"] .pod.coh .pod-label { color:#D97706; }
+  [data-theme="graphite"] .pod.cog .pod-label { color:#0D9488; }
+  [data-theme="graphite"] .deficit-item { background:rgba(0,0,0,.06); border-color:rgba(0,0,0,.12); }
+  [data-theme="graphite"] .qe-card { background:rgba(212,216,228,.92); }
+  [data-theme="graphite"] .tally-mini-pod.coh { background:linear-gradient(135deg,#F5EDCC,#EEE4B8); border-color:rgba(245,158,11,.35); }
+  [data-theme="graphite"] .tally-mini-pod.cog { background:linear-gradient(135deg,#C8E8E4,#BAE0DC); border-color:rgba(45,212,191,.35); }
+  [data-theme="graphite"] #app::before { background:radial-gradient(ellipse 70% 45% at 15% 0%,rgba(129,140,248,.08) 0%,transparent 65%),radial-gradient(ellipse 55% 40% at 85% 100%,rgba(99,102,241,.06) 0%,transparent 60%); }
+  [data-theme="graphite"] input[type=date]::-webkit-calendar-picker-indicator { filter:none; opacity:.5; }
+  [data-theme="graphite"] .modal-bg { background:rgba(12,14,20,.55); }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   html, body { height: 100%; background: var(--bg); color: var(--text); font-family: var(--font); font-size: 15px; overscroll-behavior: none; font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased; }
@@ -2268,7 +2271,7 @@ function saveSettings() {
 function _syncThemeToggle(name) {
   const btn = document.getElementById('btnThemeToggle');
   if (!btn) return;
-  const isLight = name === 'ivory';
+  const isLight = name === 'graphite';
   btn.innerHTML = isLight
     ? '<i class="ti ti-moon" style="font-size:17px;"></i>'
     : '<i class="ti ti-sun" style="font-size:17px;"></i>';
@@ -2292,7 +2295,7 @@ function loadTheme() {
 
 function toggleTheme() {
   const cur = document.documentElement.getAttribute('data-theme') || 'midnight';
-  applyTheme(cur === 'midnight' ? 'ivory' : 'midnight');
+  applyTheme(cur === 'midnight' ? 'graphite' : 'midnight');
 }
 
 // ── NAVIGATION ─────────────────────────────────────────────────────────────
