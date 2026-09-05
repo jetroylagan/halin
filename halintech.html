@@ -73,27 +73,27 @@
     --glass-header:rgba(6,8,17,.88); --glass-tabs:rgba(6,8,17,.92); --glass-sticky:rgba(6,8,17,.85);
     --shadow-tabs:0 -4px 24px rgba(0,0,0,.5);
   }
-  [data-theme="pearl"] {
-    --bg:#FAFBFF; --surface:#F0F2FA; --surface2:#E8EBF5; --surface3:#DDE0EE; --surface4:#D0D4E8;
-    --s1:#F0F2FA; --s2:#E8EBF5; --s3:#DDE0EE; --s4:#D0D4E8;
+  [data-theme="mist"] {
+    --bg:#F2F5FC; --surface:#EBF0F8; --surface2:#E0E7F4; --surface3:#D4DDEF; --surface4:#C8D4EC;
+    --s1:#EBF0F8; --s2:#E0E7F4; --s3:#D4DDEF; --s4:#C8D4EC;
     --border:rgba(0,0,0,.08); --border2:rgba(0,0,0,.13);
-    --text:#1A1D36; --text2:#5C6080; --muted:#9398B0;
-    --glass-header:rgba(250,251,255,.92); --glass-tabs:rgba(250,251,255,.95); --glass-sticky:rgba(250,251,255,.90);
+    --text:#1C2340; --text2:#4A5880; --muted:#8090B0;
+    --glass-header:rgba(242,245,252,.92); --glass-tabs:rgba(242,245,252,.95); --glass-sticky:rgba(242,245,252,.90);
     --shadow-tabs:0 -4px 24px rgba(0,0,0,.08);
   }
-  /* Pearl light-mode overrides for hardcoded dark values */
-  [data-theme="pearl"] .pod.coh { background:linear-gradient(135deg,#EFF1FA 0%,#E8EAF5 100%); border-color:#C8CCEE; }
-  [data-theme="pearl"] .pod.cog { background:linear-gradient(135deg,#EEF8F5 0%,#E2F4EF 100%); border-color:#B4E4D8; }
-  [data-theme="pearl"] .pod.grand { background:linear-gradient(135deg,#EBF7EE 0%,#DFF4E6 100%); border-color:#B0E4C4; }
-  [data-theme="pearl"] .pod.coh .pod-label { color:#6366F1; }
-  [data-theme="pearl"] .pod.cog .pod-label { color:#0D9488; }
-  [data-theme="pearl"] .deficit-item { background:rgba(0,0,0,.04); border-color:rgba(0,0,0,.09); }
-  [data-theme="pearl"] .qe-card { background:rgba(240,242,250,.92); }
-  [data-theme="pearl"] .tally-mini-pod.coh { background:linear-gradient(135deg,#FEFAED,#FDF5D6); border-color:rgba(245,158,11,.3); }
-  [data-theme="pearl"] .tally-mini-pod.cog { background:linear-gradient(135deg,#EEF9F7,#E2F5F0); border-color:rgba(45,212,191,.3); }
-  [data-theme="pearl"] #app::before { background:radial-gradient(ellipse 70% 45% at 15% 0%,rgba(99,102,241,.06) 0%,transparent 65%),radial-gradient(ellipse 55% 40% at 85% 100%,rgba(45,212,191,.05) 0%,transparent 60%); }
-  [data-theme="pearl"] input[type=date]::-webkit-calendar-picker-indicator { filter:none; opacity:.5; }
-  [data-theme="pearl"] .modal-bg { background:rgba(60,65,120,.4); }
+  /* Mist light-mode overrides for hardcoded dark values */
+  [data-theme="mist"] .pod.coh { background:linear-gradient(135deg,#EAEEf8 0%,#E2E8F4 100%); border-color:#BEC8E8; }
+  [data-theme="mist"] .pod.cog { background:linear-gradient(135deg,#E8F5F2 0%,#DDF0EC 100%); border-color:#AADDD4; }
+  [data-theme="mist"] .pod.grand { background:linear-gradient(135deg,#E8F5EC 0%,#DCF0E2 100%); border-color:#A8DDB8; }
+  [data-theme="mist"] .pod.coh .pod-label { color:#5056A0; }
+  [data-theme="mist"] .pod.cog .pod-label { color:#0D9488; }
+  [data-theme="mist"] .deficit-item { background:rgba(0,0,0,.04); border-color:rgba(0,0,0,.09); }
+  [data-theme="mist"] .qe-card { background:rgba(235,240,248,.92); }
+  [data-theme="mist"] .tally-mini-pod.coh { background:linear-gradient(135deg,#FEFAED,#FDF5D6); border-color:rgba(245,158,11,.3); }
+  [data-theme="mist"] .tally-mini-pod.cog { background:linear-gradient(135deg,#EBF6F4,#DDF0EC); border-color:rgba(45,212,191,.3); }
+  [data-theme="mist"] #app::before { background:radial-gradient(ellipse 70% 45% at 15% 0%,rgba(99,102,241,.07) 0%,transparent 65%),radial-gradient(ellipse 55% 40% at 85% 100%,rgba(45,212,191,.05) 0%,transparent 60%); }
+  [data-theme="mist"] input[type=date]::-webkit-calendar-picker-indicator { filter:none; opacity:.5; }
+  [data-theme="mist"] .modal-bg { background:rgba(28,35,64,.4); }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   html, body { height: 100%; background: var(--bg); color: var(--text); font-family: var(--font); font-size: 15px; overscroll-behavior: none; font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased; }
@@ -2268,7 +2268,7 @@ function saveSettings() {
 function _syncThemeToggle(name) {
   const btn = document.getElementById('btnThemeToggle');
   if (!btn) return;
-  const isLight = name === 'pearl';
+  const isLight = name === 'mist';
   btn.innerHTML = isLight
     ? '<i class="ti ti-moon" style="font-size:17px;"></i>'
     : '<i class="ti ti-sun" style="font-size:17px;"></i>';
@@ -2292,7 +2292,7 @@ function loadTheme() {
 
 function toggleTheme() {
   const cur = document.documentElement.getAttribute('data-theme') || 'midnight';
-  applyTheme(cur === 'midnight' ? 'pearl' : 'midnight');
+  applyTheme(cur === 'midnight' ? 'mist' : 'midnight');
 }
 
 // ── NAVIGATION ─────────────────────────────────────────────────────────────
