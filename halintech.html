@@ -73,30 +73,37 @@
     --glass-header:rgba(6,8,17,.88); --glass-tabs:rgba(6,8,17,.92); --glass-sticky:rgba(6,8,17,.85);
     --shadow-tabs:0 -4px 24px rgba(0,0,0,.5);
   }
-  [data-theme="graphite"] {
-    --bg:#E2E4E9; --surface:#D4D8E4; --surface2:#C8CCDA; --surface3:#BCBECE; --surface4:#B0B4C2;
-    --s1:#D4D8E4; --s2:#C8CCDA; --s3:#BCBECE; --s4:#B0B4C2;
-    --border:rgba(0,0,0,.10); --border2:rgba(0,0,0,.16);
-    --text:#0C0E14; --text2:#363C50; --muted:#606878;
-    --glass-header:rgba(226,228,233,.96); --glass-tabs:rgba(226,228,233,.98); --glass-sticky:rgba(226,228,233,.94);
-    --shadow-tabs:0 -4px 24px rgba(0,0,0,.12);
+  [data-theme="ice"] {
+    --bg:#EDF6FF; --surface:#DCF0FE; --surface2:#CCE6FC; --surface3:#BDD8F8; --surface4:#AACCE8;
+    --s1:#DCF0FE; --s2:#CCE6FC; --s3:#BDD8F8; --s4:#AACCE8;
+    --border:rgba(0,60,120,.10); --border2:rgba(0,60,120,.18);
+    --text:#0A1628; --text2:#1E3A5C; --muted:#6080A0;
+    --glass-header:rgba(237,246,255,.96); --glass-tabs:rgba(237,246,255,.98); --glass-sticky:rgba(237,246,255,.94);
+    --shadow-tabs:0 -4px 24px rgba(0,60,120,.12);
   }
-  /* Graphite light-mode overrides for hardcoded dark values */
-  [data-theme="graphite"] .pod.coh { background:linear-gradient(135deg,#FEF5DC 0%,#FCEDC4 100%); border-color:rgba(245,158,11,.45); }
-  [data-theme="graphite"] .pod.coh::before { background:radial-gradient(circle at 85% 15%,rgba(245,158,11,.38) 0%,transparent 62%); }
-  [data-theme="graphite"] .pod.cog { background:linear-gradient(135deg,#D4F8F4 0%,#C0F2EC 100%); border-color:rgba(45,212,191,.42); }
-  [data-theme="graphite"] .pod.cog::before { background:radial-gradient(circle at 85% 15%,rgba(45,212,191,.32) 0%,transparent 62%); }
-  [data-theme="graphite"] .pod.grand { background:linear-gradient(135deg,#D4F4E0 0%,#C0EED0 100%); border-color:rgba(74,222,128,.40); }
-  [data-theme="graphite"] .pod.grand::before { background:radial-gradient(circle at 85% 15%,rgba(74,222,128,.28) 0%,transparent 62%); }
-  [data-theme="graphite"] .pod.coh .pod-label { color:#D97706; }
-  [data-theme="graphite"] .pod.cog .pod-label { color:#0D9488; }
-  [data-theme="graphite"] .deficit-item { background:rgba(0,0,0,.06); border-color:rgba(0,0,0,.12); }
-  [data-theme="graphite"] .qe-card { background:rgba(212,216,228,.92); }
-  [data-theme="graphite"] .tally-mini-pod.coh { background:linear-gradient(135deg,#F5EDCC,#EEE4B8); border-color:rgba(245,158,11,.35); }
-  [data-theme="graphite"] .tally-mini-pod.cog { background:linear-gradient(135deg,#C8E8E4,#BAE0DC); border-color:rgba(45,212,191,.35); }
-  [data-theme="graphite"] #app::before { background:radial-gradient(ellipse 70% 45% at 15% 0%,rgba(129,140,248,.08) 0%,transparent 65%),radial-gradient(ellipse 55% 40% at 85% 100%,rgba(99,102,241,.06) 0%,transparent 60%); }
-  [data-theme="graphite"] input[type=date]::-webkit-calendar-picker-indicator { filter:none; opacity:.5; }
-  [data-theme="graphite"] .modal-bg { background:rgba(12,14,20,.55); }
+  /* Ice light-mode overrides for hardcoded dark values */
+  [data-theme="ice"] .pod.coh { background:linear-gradient(135deg,#FEF5DC 0%,#FCEDC4 100%); border-color:rgba(245,158,11,.45); }
+  [data-theme="ice"] .pod.coh::before { background:radial-gradient(circle at 85% 15%,rgba(245,158,11,.38) 0%,transparent 62%); }
+  [data-theme="ice"] .pod.cog { background:linear-gradient(135deg,#D4F8F4 0%,#C0F2EC 100%); border-color:rgba(45,212,191,.42); }
+  [data-theme="ice"] .pod.cog::before { background:radial-gradient(circle at 85% 15%,rgba(45,212,191,.32) 0%,transparent 62%); }
+  [data-theme="ice"] .pod.grand { background:linear-gradient(135deg,#D4F4E0 0%,#C0EED0 100%); border-color:rgba(74,222,128,.40); }
+  [data-theme="ice"] .pod.grand::before { background:radial-gradient(circle at 85% 15%,rgba(74,222,128,.28) 0%,transparent 62%); }
+  [data-theme="ice"] .pod.coh .pod-label { color:#D97706; }
+  [data-theme="ice"] .pod.cog .pod-label { color:#0D9488; }
+  [data-theme="ice"] .pod.coh .pod-amount { background-image:linear-gradient(135deg,#B45309 0%,#D97706 60%,#B45309 100%); }
+  [data-theme="ice"] .pod.cog .pod-amount { background-image:linear-gradient(135deg,#0D9488 0%,#0F766E 60%,#0D9488 100%); }
+  [data-theme="ice"] .pod.grand .pod-amount { background-image:linear-gradient(135deg,#16A34A 0%,#15803D 60%,#16A34A 100%); }
+  [data-theme="ice"] .pod.coh .pod-sub { color:rgba(180,100,0,.70); }
+  [data-theme="ice"] .pod.cog .pod-sub { color:rgba(13,148,136,.75); }
+  [data-theme="ice"] .deficit-item { background:rgba(0,60,120,.06); border-color:rgba(0,60,120,.12); }
+  [data-theme="ice"] .qe-card { background:rgba(220,240,254,.92); }
+  [data-theme="ice"] .tally-mini-pod.coh { background:linear-gradient(135deg,#F5EDCC,#EEE4B8); border-color:rgba(245,158,11,.35); }
+  [data-theme="ice"] .tally-mini-pod.cog { background:linear-gradient(135deg,#C8E8E4,#BAE0DC); border-color:rgba(45,212,191,.35); }
+  [data-theme="ice"] #app::before { background:radial-gradient(ellipse 70% 45% at 15% 0%,rgba(99,130,241,.10) 0%,transparent 65%),radial-gradient(ellipse 55% 40% at 85% 100%,rgba(45,212,191,.07) 0%,transparent 60%); }
+  [data-theme="ice"] .hdr-name { background:linear-gradient(135deg,#312E81 0%,#4F46E5 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  [data-theme="ice"] .hdr-date { color:#1E3A5C; }
+  [data-theme="ice"] input[type=date]::-webkit-calendar-picker-indicator { filter:none; opacity:.5; }
+  [data-theme="ice"] .modal-bg { background:rgba(10,22,40,.55); }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   html, body { height: 100%; background: var(--bg); color: var(--text); font-family: var(--font); font-size: 15px; overscroll-behavior: none; font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased; }
@@ -1045,7 +1052,7 @@
       <!-- Account card -->
       <div class="card" style="padding:0;overflow:hidden;margin-bottom:12px;" id="sbSyncCard">
         <div class="card-hdr">
-          <div class="card-hdr-title">Account</div>
+          <div class="card-hdr-title">Cloud Settings</div>
           <span id="sbDot" class="fb-dot"></span>
         </div>
 
@@ -1107,6 +1114,7 @@
       <div class="card" style="padding:0;overflow:hidden;margin-bottom:12px;">
         <div class="card-hdr"><div class="card-hdr-title">Data</div></div>
         <div id="backupMeta" style="display:none;background:var(--surface2);border-radius:0;padding:8px 16px;font-size:12px;border-bottom:1px solid var(--border);"></div>
+        <div id="cloudSyncMeta" style="display:none;background:var(--surface2);border-radius:0;padding:8px 16px;font-size:12px;border-bottom:1px solid var(--border);"></div>
         <button class="row-btn" onclick="backupJSON()">
           <div class="row-btn-icon teal"><i class="ti ti-device-floppy"></i></div>
           <div class="row-btn-body"><div>Save Backup</div><div class="row-btn-sub">Export as .json file</div></div>
@@ -1569,7 +1577,7 @@ function render() {
   if (tab === 'home')    { renderHome(); setTimeout(renderHomeChart, 0); }
   if (tab === 'log')     { renderHistory(); }
   if (tab === 'reports') { renderReports(bal); }
-  if (tab === 'settings'){ renderSettings(); renderBackupMeta(); }
+  if (tab === 'settings'){ renderSettings(); renderBackupMeta(); renderCloudSyncMeta(); }
   if (tab === 'tally')   { renderTally(); }
 }
 
@@ -1874,13 +1882,6 @@ function renderLineChart(groups) {
   function drawBase(highlightIdx = -1) {
     ctx.clearRect(0, 0, W, H);
 
-    // Subtle grid
-    ctx.strokeStyle = 'rgba(42,64,96,0.4)'; ctx.lineWidth = 1;
-    [0.33, 0.66, 1].forEach(r => {
-      const y = PAD.top + cH * (1 - r);
-      ctx.beginPath(); ctx.moveTo(PAD.left, y); ctx.lineTo(PAD.left + cW, y); ctx.stroke();
-    });
-
     earnArr.forEach((v, i) => {
       const isLatest = i === n - 1;
       const isHl     = i === highlightIdx;
@@ -1905,24 +1906,11 @@ function renderLineChart(groups) {
       ctx.roundRect(x, y, barW, bH, [r, r, 0, 0]);
       ctx.fill();
 
-      // Glow on latest / highlighted
-      if ((isLatest || isHl) && v > 0) {
-        ctx.shadowColor = 'rgba(45,212,191,.35)';
-        ctx.shadowBlur  = 8;
-        ctx.fillStyle   = grad;
-        ctx.beginPath(); ctx.roundRect(x, y, barW, bH, [r, r, 0, 0]); ctx.fill();
-        ctx.shadowBlur  = 0;
-      }
-
       // Value label above bar
-      if (v > 0 && bH > 10) {
-        ctx.font      = (isLatest || isHl) ? 'bold 8px system-ui' : '8px system-ui';
-        ctx.textAlign = 'center';
-        ctx.fillStyle = (isLatest || isHl) ? '#2DD4BF' : 'rgba(99,102,241,.9)';
-        const lblX = x + barW / 2;
-        const lblY = y - 4;
-        if (lblY > PAD.top + 4) ctx.fillText(fmt(v), lblX, lblY);
-      }
+      ctx.font      = (isLatest || isHl) ? 'bold 8px system-ui' : '8px system-ui';
+      ctx.textAlign = 'center';
+      ctx.fillStyle = (isLatest || isHl) ? '#2DD4BF' : 'rgba(99,102,241,.9)';
+      { const lblX = x + barW / 2; const lblY = y - 4; ctx.fillText(fmt(v), lblX, lblY); }
 
       // Period label below
       const short = labels[i] ? (rptPeriod === 'week'  ? labels[i].split(' ')[0] + '\n' + labels[i].split(' ')[1] :
@@ -2271,7 +2259,7 @@ function saveSettings() {
 function _syncThemeToggle(name) {
   const btn = document.getElementById('btnThemeToggle');
   if (!btn) return;
-  const isLight = name === 'graphite';
+  const isLight = name === 'ice';
   btn.innerHTML = isLight
     ? '<i class="ti ti-moon" style="font-size:17px;"></i>'
     : '<i class="ti ti-sun" style="font-size:17px;"></i>';
@@ -2295,7 +2283,7 @@ function loadTheme() {
 
 function toggleTheme() {
   const cur = document.documentElement.getAttribute('data-theme') || 'midnight';
-  applyTheme(cur === 'midnight' ? 'graphite' : 'midnight');
+  applyTheme(cur === 'midnight' ? 'ice' : 'midnight');
 }
 
 // ── NAVIGATION ─────────────────────────────────────────────────────────────
@@ -2687,6 +2675,19 @@ function renderBackupMeta() {
     const d = new Date(lastBackup);
     el.style.display = '';
     el.innerHTML = `✅ Last backup: <strong>${d.toLocaleDateString('en-PH', { month:'short', day:'numeric', year:'numeric' })} ${d.toLocaleTimeString('en-PH', { hour:'2-digit', minute:'2-digit' })}</strong>`;
+  }
+}
+
+function renderCloudSyncMeta() {
+  const el = document.getElementById('cloudSyncMeta');
+  if (!el) return;
+  const lastSync = localStorage.getItem('gcash_last_cloud_sync');
+  if (lastSync) {
+    const d = new Date(lastSync);
+    el.style.display = '';
+    el.innerHTML = `☁️ Last push to cloud: <strong>${d.toLocaleDateString('en-PH', { month:'short', day:'numeric', year:'numeric' })} ${d.toLocaleTimeString('en-PH', { hour:'2-digit', minute:'2-digit' })}</strong>`;
+  } else {
+    el.style.display = 'none';
   }
 }
 
@@ -3143,12 +3144,10 @@ function renderHomeChart() {
       ctx.fill();
 
       // Earn label above bar
-      if (v > 0) {
-        ctx.font = isToday ? 'bold 8px system-ui' : '8px system-ui';
-        ctx.textAlign = 'center';
-        ctx.fillStyle = isToday ? '#2DD4BF' : 'rgba(99,102,241,0.9)';
-        ctx.fillText(fmt(v), x + barW / 2, y - 4);
-      }
+      ctx.font = isToday ? 'bold 8px system-ui' : '8px system-ui';
+      ctx.textAlign = 'center';
+      ctx.fillStyle = isToday ? '#2DD4BF' : 'rgba(99,102,241,0.9)';
+      ctx.fillText(fmt(v), x + barW / 2, y - 4);
 
       // Day label below
       ctx.font = isToday ? 'bold 9px system-ui' : '9px system-ui';
@@ -3300,8 +3299,10 @@ function checkBackupWarning() {
   const el = document.getElementById('backupWarning');
   const txt = document.getElementById('backupWarningText');
   if (!el || !txt) return;
-  const lastBackup = localStorage.getItem('gcash_last_backup');
-  if (!lastBackup) {
+  const candidates = [localStorage.getItem('gcash_last_backup'), localStorage.getItem('gcash_last_cloud_sync')]
+    .filter(Boolean).map(s => new Date(s));
+  const lastSafe = candidates.length ? new Date(Math.max(...candidates)) : null;
+  if (!lastSafe) {
     if (state.transactions.length > 0) {
       txt.textContent = 'You have never saved a backup. Go to Settings → Backup to save one.';
       el.style.display = 'flex';
@@ -3310,7 +3311,7 @@ function checkBackupWarning() {
     }
     return;
   }
-  const daysSince = (Date.now() - new Date(lastBackup).getTime()) / (1000 * 60 * 60 * 24);
+  const daysSince = (Date.now() - lastSafe.getTime()) / (1000 * 60 * 60 * 24);
   if (daysSince >= 7) {
     txt.textContent = `Last backup was ${Math.floor(daysSince)} days ago. Save a new one in Settings → Backup.`;
     el.style.display = 'flex';
@@ -3408,12 +3409,14 @@ function exportXLSX() {
 function updateBackupDot() {
   const dot = document.getElementById('backupDot');
   if (!dot) return;
-  const lastBackup = localStorage.getItem('gcash_last_backup');
-  if (!lastBackup) {
+  const candidates = [localStorage.getItem('gcash_last_backup'), localStorage.getItem('gcash_last_cloud_sync')]
+    .filter(Boolean).map(s => new Date(s));
+  const lastSafe = candidates.length ? new Date(Math.max(...candidates)) : null;
+  if (!lastSafe) {
     dot.className = state.transactions.length > 0 ? 'backup-dot danger' : 'backup-dot';
     return;
   }
-  const days = (Date.now() - new Date(lastBackup).getTime()) / 86400000;
+  const days = (Date.now() - lastSafe.getTime()) / 86400000;
   dot.className = 'backup-dot' + (days < 3 ? '' : days < 7 ? ' warn' : ' danger');
 }
 
@@ -3772,9 +3775,9 @@ async function sbPushAll(silent = false) {
 
     await sbPushSettings();
     await sbPushTally();
-    localStorage.setItem('gcash_last_backup', new Date().toISOString());
+    localStorage.setItem('gcash_last_cloud_sync', new Date().toISOString());
     if (!silent) showToast(`Pushed ${state.transactions.length} transactions to cloud storage ✓`);
-    renderBackupMeta(); updateBackupDot();
+    renderBackupMeta(); renderCloudSyncMeta(); updateBackupDot();
     setSbStatus('connected', 'Last push: ' + new Date().toLocaleTimeString('en-PH', { hour:'2-digit', minute:'2-digit' }));
   } catch(e) {
     const step = e._step ? ` (${e._step})` : '';
@@ -3859,8 +3862,8 @@ async function sbPull() {
         await saveSettingsToIDB();
         idbPut('tally', { id: 'main', ...tallyState }).catch(() => {});
         render(); renderTally();
-        localStorage.setItem('gcash_last_backup', new Date().toISOString());
-        renderBackupMeta(); updateBackupDot();
+        localStorage.setItem('gcash_last_cloud_sync', new Date().toISOString());
+        renderBackupMeta(); renderCloudSyncMeta(); updateBackupDot();
         showToast(`Pulled ${txns.length} transaction(s) from cloud storage. ✓`);
         setSbStatus('connected', 'Last pull: ' + new Date().toLocaleTimeString('en-PH', { hour:'2-digit', minute:'2-digit' }));
       }
@@ -3894,7 +3897,11 @@ function renderSbCard() {
 
   if (_sbUser) {
     form.style.display = 'none'; loggedIn.style.display = '';
-    setSbStatus('connected', 'Connected');
+    const lastSync = localStorage.getItem('gcash_last_cloud_sync');
+    const syncLabel = lastSync
+      ? 'Last push: ' + new Date(lastSync).toLocaleDateString('en-PH', { month:'short', day:'numeric' }) + ' ' + new Date(lastSync).toLocaleTimeString('en-PH', { hour:'2-digit', minute:'2-digit' })
+      : 'Connected';
+    setSbStatus('connected', syncLabel);
     const emailEl = document.getElementById('sbUserEmail');
     if (emailEl) emailEl.textContent = _sbUser.email;
   } else {
