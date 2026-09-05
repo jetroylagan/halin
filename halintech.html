@@ -73,27 +73,27 @@
     --glass-header:rgba(6,8,17,.88); --glass-tabs:rgba(6,8,17,.92); --glass-sticky:rgba(6,8,17,.85);
     --shadow-tabs:0 -4px 24px rgba(0,0,0,.5);
   }
-  [data-theme="sage"] {
-    --bg:#F4FAF7; --surface:#E8F5EE; --surface2:#D8EEE4; --surface3:#C8E6D8; --surface4:#B8DECA;
-    --s1:#E8F5EE; --s2:#D8EEE4; --s3:#C8E6D8; --s4:#B8DECA;
+  [data-theme="ivory"] {
+    --bg:#FAFAF4; --surface:#F0F0E4; --surface2:#E6E6D6; --surface3:#DDDCCA; --surface4:#D2D1BC;
+    --s1:#F0F0E4; --s2:#E6E6D6; --s3:#DDDCCA; --s4:#D2D1BC;
     --border:rgba(0,0,0,.08); --border2:rgba(0,0,0,.13);
-    --text:#162A22; --text2:#486055; --muted:#7A9E90;
-    --glass-header:rgba(244,250,247,.92); --glass-tabs:rgba(244,250,247,.95); --glass-sticky:rgba(244,250,247,.90);
+    --text:#1C1C10; --text2:#5A5A44; --muted:#8A8A70;
+    --glass-header:rgba(250,250,244,.92); --glass-tabs:rgba(250,250,244,.95); --glass-sticky:rgba(250,250,244,.90);
     --shadow-tabs:0 -4px 24px rgba(0,0,0,.08);
   }
-  /* Sage light-mode overrides for hardcoded dark values */
-  [data-theme="sage"] .pod.coh { background:linear-gradient(135deg,#F0F8EC 0%,#E8F4E2 100%); border-color:#BCDDB0; }
-  [data-theme="sage"] .pod.cog { background:linear-gradient(135deg,#E4F6F2 0%,#D8F0EA 100%); border-color:#A0DDD0; }
-  [data-theme="sage"] .pod.grand { background:linear-gradient(135deg,#E4F6E8 0%,#D8F0DE 100%); border-color:#A0DDB0; }
-  [data-theme="sage"] .pod.coh .pod-label { color:#5A7A50; }
-  [data-theme="sage"] .pod.cog .pod-label { color:#0D9488; }
-  [data-theme="sage"] .deficit-item { background:rgba(0,0,0,.04); border-color:rgba(0,0,0,.09); }
-  [data-theme="sage"] .qe-card { background:rgba(232,245,238,.92); }
-  [data-theme="sage"] .tally-mini-pod.coh { background:linear-gradient(135deg,#FEFAED,#FDF5D6); border-color:rgba(245,158,11,.3); }
-  [data-theme="sage"] .tally-mini-pod.cog { background:linear-gradient(135deg,#E4F6F2,#D8F0EA); border-color:rgba(45,212,191,.3); }
-  [data-theme="sage"] #app::before { background:radial-gradient(ellipse 70% 45% at 15% 0%,rgba(52,211,153,.07) 0%,transparent 65%),radial-gradient(ellipse 55% 40% at 85% 100%,rgba(45,212,191,.06) 0%,transparent 60%); }
-  [data-theme="sage"] input[type=date]::-webkit-calendar-picker-indicator { filter:none; opacity:.5; }
-  [data-theme="sage"] .modal-bg { background:rgba(22,42,34,.4); }
+  /* Ivory light-mode overrides for hardcoded dark values */
+  [data-theme="ivory"] .pod.coh { background:linear-gradient(135deg,#FDF6E8 0%,#F8EED8 100%); border-color:#E0C888; }
+  [data-theme="ivory"] .pod.cog { background:linear-gradient(135deg,#EDFAF6 0%,#E2F4EE 100%); border-color:#A8DDD0; }
+  [data-theme="ivory"] .pod.grand { background:linear-gradient(135deg,#F4F4EA 0%,#EBEBDC 100%); border-color:#CCCCA8; }
+  [data-theme="ivory"] .pod.coh .pod-label { color:#D97706; }
+  [data-theme="ivory"] .pod.cog .pod-label { color:#0D9488; }
+  [data-theme="ivory"] .deficit-item { background:rgba(0,0,0,.04); border-color:rgba(0,0,0,.09); }
+  [data-theme="ivory"] .qe-card { background:rgba(240,240,228,.92); }
+  [data-theme="ivory"] .tally-mini-pod.coh { background:linear-gradient(135deg,#FEFAED,#FDF5D6); border-color:rgba(245,158,11,.3); }
+  [data-theme="ivory"] .tally-mini-pod.cog { background:linear-gradient(135deg,#EDFAF6,#E2F4EE); border-color:rgba(45,212,191,.3); }
+  [data-theme="ivory"] #app::before { background:radial-gradient(ellipse 70% 45% at 15% 0%,rgba(99,102,241,.05) 0%,transparent 65%),radial-gradient(ellipse 55% 40% at 85% 100%,rgba(245,158,11,.04) 0%,transparent 60%); }
+  [data-theme="ivory"] input[type=date]::-webkit-calendar-picker-indicator { filter:none; opacity:.5; }
+  [data-theme="ivory"] .modal-bg { background:rgba(28,28,16,.45); }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   html, body { height: 100%; background: var(--bg); color: var(--text); font-family: var(--font); font-size: 15px; overscroll-behavior: none; font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased; }
@@ -915,10 +915,10 @@
       <div class="week-chart-card">
         <div class="card-hdr">
           <div class="card-hdr-title">This Week's Earnings</div>
-          <div class="chart-toggle" id="homeChartToggle">
+          <!-- <div class="chart-toggle" id="homeChartToggle">
             <button class="chart-mode-btn active" onclick="setHomeChartMode('bar',this)">Bar</button>
             <button class="chart-mode-btn"        onclick="setHomeChartMode('line',this)">Line</button>
-          </div>
+          </div> -->
         </div>
         <div style="padding:12px 14px 10px;">
           <canvas id="homeChart" height="120" style="width:100%;display:block;"></canvas>
@@ -2268,7 +2268,7 @@ function saveSettings() {
 function _syncThemeToggle(name) {
   const btn = document.getElementById('btnThemeToggle');
   if (!btn) return;
-  const isLight = name === 'sage';
+  const isLight = name === 'ivory';
   btn.innerHTML = isLight
     ? '<i class="ti ti-moon" style="font-size:17px;"></i>'
     : '<i class="ti ti-sun" style="font-size:17px;"></i>';
@@ -2292,7 +2292,7 @@ function loadTheme() {
 
 function toggleTheme() {
   const cur = document.documentElement.getAttribute('data-theme') || 'midnight';
-  applyTheme(cur === 'midnight' ? 'sage' : 'midnight');
+  applyTheme(cur === 'midnight' ? 'ivory' : 'midnight');
 }
 
 // ── NAVIGATION ─────────────────────────────────────────────────────────────
