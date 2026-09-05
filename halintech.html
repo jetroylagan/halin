@@ -73,27 +73,27 @@
     --glass-header:rgba(6,8,17,.88); --glass-tabs:rgba(6,8,17,.92); --glass-sticky:rgba(6,8,17,.85);
     --shadow-tabs:0 -4px 24px rgba(0,0,0,.5);
   }
-  [data-theme="mist"] {
-    --bg:#F2F5FC; --surface:#EBF0F8; --surface2:#E0E7F4; --surface3:#D4DDEF; --surface4:#C8D4EC;
-    --s1:#EBF0F8; --s2:#E0E7F4; --s3:#D4DDEF; --s4:#C8D4EC;
+  [data-theme="sage"] {
+    --bg:#F4FAF7; --surface:#E8F5EE; --surface2:#D8EEE4; --surface3:#C8E6D8; --surface4:#B8DECA;
+    --s1:#E8F5EE; --s2:#D8EEE4; --s3:#C8E6D8; --s4:#B8DECA;
     --border:rgba(0,0,0,.08); --border2:rgba(0,0,0,.13);
-    --text:#1C2340; --text2:#4A5880; --muted:#8090B0;
-    --glass-header:rgba(242,245,252,.92); --glass-tabs:rgba(242,245,252,.95); --glass-sticky:rgba(242,245,252,.90);
+    --text:#162A22; --text2:#486055; --muted:#7A9E90;
+    --glass-header:rgba(244,250,247,.92); --glass-tabs:rgba(244,250,247,.95); --glass-sticky:rgba(244,250,247,.90);
     --shadow-tabs:0 -4px 24px rgba(0,0,0,.08);
   }
-  /* Mist light-mode overrides for hardcoded dark values */
-  [data-theme="mist"] .pod.coh { background:linear-gradient(135deg,#EAEEf8 0%,#E2E8F4 100%); border-color:#BEC8E8; }
-  [data-theme="mist"] .pod.cog { background:linear-gradient(135deg,#E8F5F2 0%,#DDF0EC 100%); border-color:#AADDD4; }
-  [data-theme="mist"] .pod.grand { background:linear-gradient(135deg,#E8F5EC 0%,#DCF0E2 100%); border-color:#A8DDB8; }
-  [data-theme="mist"] .pod.coh .pod-label { color:#5056A0; }
-  [data-theme="mist"] .pod.cog .pod-label { color:#0D9488; }
-  [data-theme="mist"] .deficit-item { background:rgba(0,0,0,.04); border-color:rgba(0,0,0,.09); }
-  [data-theme="mist"] .qe-card { background:rgba(235,240,248,.92); }
-  [data-theme="mist"] .tally-mini-pod.coh { background:linear-gradient(135deg,#FEFAED,#FDF5D6); border-color:rgba(245,158,11,.3); }
-  [data-theme="mist"] .tally-mini-pod.cog { background:linear-gradient(135deg,#EBF6F4,#DDF0EC); border-color:rgba(45,212,191,.3); }
-  [data-theme="mist"] #app::before { background:radial-gradient(ellipse 70% 45% at 15% 0%,rgba(99,102,241,.07) 0%,transparent 65%),radial-gradient(ellipse 55% 40% at 85% 100%,rgba(45,212,191,.05) 0%,transparent 60%); }
-  [data-theme="mist"] input[type=date]::-webkit-calendar-picker-indicator { filter:none; opacity:.5; }
-  [data-theme="mist"] .modal-bg { background:rgba(28,35,64,.4); }
+  /* Sage light-mode overrides for hardcoded dark values */
+  [data-theme="sage"] .pod.coh { background:linear-gradient(135deg,#F0F8EC 0%,#E8F4E2 100%); border-color:#BCDDB0; }
+  [data-theme="sage"] .pod.cog { background:linear-gradient(135deg,#E4F6F2 0%,#D8F0EA 100%); border-color:#A0DDD0; }
+  [data-theme="sage"] .pod.grand { background:linear-gradient(135deg,#E4F6E8 0%,#D8F0DE 100%); border-color:#A0DDB0; }
+  [data-theme="sage"] .pod.coh .pod-label { color:#5A7A50; }
+  [data-theme="sage"] .pod.cog .pod-label { color:#0D9488; }
+  [data-theme="sage"] .deficit-item { background:rgba(0,0,0,.04); border-color:rgba(0,0,0,.09); }
+  [data-theme="sage"] .qe-card { background:rgba(232,245,238,.92); }
+  [data-theme="sage"] .tally-mini-pod.coh { background:linear-gradient(135deg,#FEFAED,#FDF5D6); border-color:rgba(245,158,11,.3); }
+  [data-theme="sage"] .tally-mini-pod.cog { background:linear-gradient(135deg,#E4F6F2,#D8F0EA); border-color:rgba(45,212,191,.3); }
+  [data-theme="sage"] #app::before { background:radial-gradient(ellipse 70% 45% at 15% 0%,rgba(52,211,153,.07) 0%,transparent 65%),radial-gradient(ellipse 55% 40% at 85% 100%,rgba(45,212,191,.06) 0%,transparent 60%); }
+  [data-theme="sage"] input[type=date]::-webkit-calendar-picker-indicator { filter:none; opacity:.5; }
+  [data-theme="sage"] .modal-bg { background:rgba(22,42,34,.4); }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   html, body { height: 100%; background: var(--bg); color: var(--text); font-family: var(--font); font-size: 15px; overscroll-behavior: none; font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased; }
@@ -2268,7 +2268,7 @@ function saveSettings() {
 function _syncThemeToggle(name) {
   const btn = document.getElementById('btnThemeToggle');
   if (!btn) return;
-  const isLight = name === 'mist';
+  const isLight = name === 'sage';
   btn.innerHTML = isLight
     ? '<i class="ti ti-moon" style="font-size:17px;"></i>'
     : '<i class="ti ti-sun" style="font-size:17px;"></i>';
@@ -2292,7 +2292,7 @@ function loadTheme() {
 
 function toggleTheme() {
   const cur = document.documentElement.getAttribute('data-theme') || 'midnight';
-  applyTheme(cur === 'midnight' ? 'mist' : 'midnight');
+  applyTheme(cur === 'midnight' ? 'sage' : 'midnight');
 }
 
 // ── NAVIGATION ─────────────────────────────────────────────────────────────
